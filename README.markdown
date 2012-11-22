@@ -3,6 +3,10 @@
 Yet Another PHP Web Framework. This is my take at the problem: creating a framework capable of making the developer's life easier and 
 helping improve development time.
 
+##Sample included
+
+The current repository contains code within the `app` folder, which is where the web application's code would reside. That is the code for a very basic example of how to use some of the tools provided by the framework to create a (yet again) super basic bloging app.
+
 ##Basic layout 
 
 I've developed this idea over time, after working for a while with Ruby on Rails, so there will be a lot of similarities. I tried to port as many features as I could.
