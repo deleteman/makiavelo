@@ -74,8 +74,73 @@ _NOTE_: I need to add more details to each point, but it should be pretty straig
 ###URL helpers
 
 ##HTML helpers
+Makiavelo provides some basic html helper functions to ease the development process.
+
+There are two types of functions, the ones that require an entity and the generic ones.
+
+####Entity related functions
+
++ form_for
++ text_field
++ password_field
++ hidden_field
++ select_field
++ time_field
++ date_field
++ file_field 
++ boolean_field
++ email_field
+
+
+###Generic helper functions
+
++ form_for_tag
++ end_form_tag
++ text_field_tag
++ password_field_tag
++ hidden_field_tag
++ select_field_tag
++ time_field_tag
++ date_field_tag
++ file_field _tag
++ boolean_field_tag
++ email_field_tag
++ link_to
++ submit
++ image_tag
 
 ##Validations
+
+Makiavelo allows for easy validation on entities before saving them to the database. In order to set the validations, you need to set a specific private attribute called `$validations`.
+That attribute needs to have the following structure:
+
+```
+$validations = array("attr_name" => array("validation_name_1", "validation_name_2", ....))
+```
+
+Currently the following validations are supported:
+
++ presence
++ email
++ integer
+
+The plan is to allow for custom validations to be created by the developer.
+
+_A simple example_: The following code will setup the Post entity to validate for it's content, title and owner's email fields:
+
+```
+class PostClass extends MakiaveloEntity {
+	
+	private $title;
+	private $content;
+	private $owner_email;
+
+	static public $validations = array("title"=> array('presence'),
+									   "content"=> array('presence'),
+									   "owner_email"=> array('presence', 'email'),
+								);
+}
+```
 
 ##Security
 
