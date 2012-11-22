@@ -53,7 +53,19 @@ __Running a task called "createSuperUser" on the task namespace "Setup"__
 ```
 
 
-###Installation
+###Installation/Setup
+
+In order to be able to load the application you developed with Makiavelo, you'll need to following:
+
++ Allow mod_rewrite on your apache config.
++ Allow the use of .htaccess files
++ Create a virtual host for your app, pointing to it's "public" folder
++ Configure the database access on the `config/database.yml` file. Right now, only MySQL is supported.
++ Configure your `/etc/hosts` file to point the new virtual host to your localhost
++ ????
++ Profit!
+
+_NOTE_: I need to add more details to each point, but it should be pretty straight forward.
 
 #More details
 
