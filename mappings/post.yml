@@ -1,0 +1,11 @@
+crud:
+  entity:
+    name: Post
+    fields:
+      title: string
+      content: text
+      owner_id: integer
+    validations:
+      title: [presence]
+      content: [presence]
+      owner_id: [presence] 

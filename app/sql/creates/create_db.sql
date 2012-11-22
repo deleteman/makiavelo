@@ -1,0 +1,1 @@
+CREATE DATABASE `mak_blog`

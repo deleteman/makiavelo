@@ -1,0 +1,33 @@
+<?php
+
+$_ROUTES = array();
+
+$_ROUTES[] = array(
+	"list" => array("url" => "/tipo_buque/", "controller" => "TipoBuque", "action" => "index"),
+	"create" => array("url" => "/tipo_buque/create", "controller" => "TipoBuque", "action" => "create", "via" => "post"),
+	"new" => array("url" => "/tipo_buque/new", "controller" => "TipoBuque", "action" => "new"),
+	"retrieve" => array("url" => "/tipo_buque/:id", "controller" => "TipoBuque", "action" => "show", "via" => "get"),
+	"update" => array("url" => "/tipo_buque/:id/edit", "controller" => "TipoBuque", "action" => "edit"),
+	"delete" => array("url" => "/tipo_buque/:id/delete", "controller" => "TipoBuque", "action" => "delete", "via" => "post")
+	);
+
+$_ROUTES[] = array(
+	"list" => array("url" => "/puerto/", "controller" => "Puerto", "action" => "index"),
+	"create" => array("url" => "/puerto/create", "controller" => "Puerto", "action" => "create", "via" => "post"),
+	"new" => array("url" => "/puerto/new", "controller" => "Puerto", "action" => "new"),
+	"retrieve" => array("url" => "/puerto/:id", "controller" => "Puerto", "action" => "show", "via" => "get"),
+	"update" => array("url" => "/puerto/:id/edit", "controller" => "Puerto", "action" => "edit"),
+	"delete" => array("url" => "/puerto/:id/delete", "controller" => "Puerto", "action" => "delete", "via" => "post")
+	);
+
+$_ROUTES[] = array(
+	"list" => array("url" => "/muelle/", "controller" => "Muelle", "action" => "index"),
+	"create" => array("url" => "/muelle/create", "controller" => "Muelle", "action" => "create", "via" => "post"),
+	"new" => array("url" => "/muelle/new", "controller" => "Muelle", "action" => "new"),
+	"retrieve" => array("url" => "/muelle/:id", "controller" => "Muelle", "action" => "show", "via" => "get"),
+	"update" => array("url" => "/muelle/:id/edit", "controller" => "Muelle", "action" => "edit"),
+	"delete" => array("url" => "/muelle/:id/delete", "controller" => "Muelle", "action" => "delete", "via" => "post")
+	);
+
+
+?>

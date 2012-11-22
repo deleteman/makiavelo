@@ -1,0 +1,1 @@
+<?=$this->renderView("../Post/index")?>

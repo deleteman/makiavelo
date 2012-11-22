@@ -1,0 +1,87 @@
+.validation-error input {
+  border:1px solid red;
+}
+.validation-error label{
+  color:red;
+}
+.container #main-wrapper {
+	margin-top:50px;
+}
+
+td form {
+	display: inline;
+}
+
+table td.options a {
+	display: block;
+	margin: 5px 0;
+}
+
+.navbar .nav li form {
+	margin: 0;
+}	
+.navbar .nav li form a {
+	color:#777;
+	padding: 10px 15px 10px; 
+	display: block;
+}
+
+li.hello-user {
+	font-style: italic;
+	padding: 10px 15px 10px;
+
+}
+
+
+/** Show styles **/
+.show-field label {
+	display: inline;
+	font-weight: bold;
+}
+
+fieldset {
+	padding: 10px;
+}
+
+.well#login-form-container {
+	width: 50%;
+	float:left;
+}
+.logo {
+	float: right;
+}
+
+#error_explanation {
+	background: #D38585;
+	padding: 10px;
+	color: #4D0C0C;
+	border-radius: 10px;
+	width: 80%;
+	margin: 0 auto;	
+}
+
+#error_explanation h2 {
+	text-shadow:1px 1px white;
+}
+
+#filter-widget {
+	border: 1px solid #DDD;
+	border-radius: 10px;
+}
+
+#filter-widget li {
+	border-top: 1px solid #ddd;
+}
+
+#filter-widget li.first {
+	border-top:0;
+}
+
+#filter-widget li:hover {
+	background-color:#eee;
+}
+
+#filter-widget li .icon-chevron-right {
+	float: right;
+	opacity:0.3;
+}

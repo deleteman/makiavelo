@@ -1,0 +1,7 @@
+en:
+	makiavelo:
+		entities:
+			errors:
+				blank: " can't be blank"
+				integer: " must be a number"
+				email: " is not a valid e-mail"

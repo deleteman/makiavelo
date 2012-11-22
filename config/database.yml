@@ -1,0 +1,12 @@
+development:
+		host: localhost
+		name: makiavelo-dev
+		user: root
+		pwd: ""
+
+production:
+		host: localhost
+		name: makiavelo-blog
+		user: makiavelo
+		pwd: maki
+
