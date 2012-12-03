@@ -207,6 +207,68 @@ class PostClass extends MakiaveloEntity {
 
 ##Localization
 
+Makiavelo tries to handle internationalization just as Rails does. Inside the project, there is a sub-project (that we should eventually move out into its own project) called I18n, which provides the same helpers.
+
+###Locale files
+
+Inside the `config/locales/` folder the use must create the different locale files, organized by folders named after the desired language. 
+i.e The folder _config/locales/en_ will contain all english localization strings, and a _config/locales/es_ will have all the spanish equivalents.
+The format for the localization files is the same as the one used by I18n on rails, a YAML file with the following structure:
+
+```yml
+en:
+	usuario:
+		atributos:
+			nombre: Name
+			edad: Age
+``` 
+
+###Helper functions
+
+The following helper functions are provided:
+
++ __t__: Short for `I18n::translate`, which receives a string parameter that acts as the key path inside the yml and returns the translation string or an error message if the key path is invalid. Using the yml from above, you could grab the translation for the `nombre` attribute of `usuario` like so: `t("usuario.atributos.nombre")`
++ __l__: Short for `I18n::localize`, which takes a time or date value and returns a string formatted in the right format.
+
+###Setting the current locale
+
+The I18n module provides a `config` method, which takes an array as an attribute. the array provided, will contain all the configuration options for the module.
+
+The current supported configuration values are:
+
++ __locale__: The desired locale to use.
+
 ##Flash
 
+Makiavelo tries to borrow the concept of flash message from Rails (and other frameworks) using the `flash` object available to the developer inside every controller.
+The flash object implements the magic method `__call`, so the way to use this object is to call the method desired with the "set" prefix when we want to set the message, and the "get" prefix when we want to get the saved message.
+We'll only be able to get the message once, after that, it'll be removed from the current session.
+
+_Example_
+
+```php
+//... code snippet inside a controller
+$this->flash->setError("There was a problem saving the user, please try again");
+//...more code goes here...
+```
+
+Now, inside the view:
+```php
+<p class="error"><?=$this->flash->getError()?></p>
+``` 
+
+That example uses the "getError" and "setError" methods, but they could've easily been "getMyErrorMessage" and "setMyErrorMessage".
+	
 ##Tasks
+
+#To-Do
+
+Makiavelo is an ongoing project, and as such, it still requires a lot of testing, refactor and rethinking of modules. 
+Some of the areas that need mayor work are:
+
++ __DB Access__: I'm currently using mysql_* functions, but in the future I wanted to improve the code, by using PDO and forgetting about the SQL helpers that Makiavelo creates for every entity.
++ __Routes__: Currently the global routes array feels wrong, there should be an easier, more elegant way of handling routes.
++ __Templating__: The original idea for Makiavelo, was to force the use of HAML, but the current implementation made it quite difficult to implement, so we need to refactor the way views and partials are handled, in order to be able to use HAML and any other templating engine.
+
+#Contribute
+Please, feel free to  fork, improve and create a pull request! All contributions are welcomed! :)
