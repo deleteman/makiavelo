@@ -21,14 +21,92 @@ In order to help with the development speed, the framework comes bundled with th
 + Bootstrap
 
 ##Folder structure
-###Controllers
-###Entities
-###Helpers
-###Views
-###SQL/Helpers
-###SQL/Creates
+
+###App/Controllers
+
+All controllers will be store inside this folder.
+The controller files and their classes will follow a simple naming convention:
+
+Since controllers are usually created to deal with a specific entity (usually but not always), we need to follow these conventions:
+
++ Controller file is named as follows: [EntityName]Controller.php
++ Controller class is named as follows: [EntityName]Controller and extends the class `ApplicationController`
+
+###App/Entities
+
+This folder contains all the entities for your application. They'll be auto-required when first called and must follow a naming convention in order to be found: 
+This convention is pretty simple, just name your file as follows: [YourEntityName]Class.php
+
+The name of the entity should always be camel-case and the first character be uppercased. 
+Finally, your entity should not have the "Class" part on it's name. So for a user entity, you'll have the following:
+
++ A file called `UserClass.php` inside the entities folder.
++ A class called `User` inside the `UserClass.php` file. `User` will extend `MakiaveloEntity`.
+
+###App/Helpers
+
+This is a purely organizational folder. In here you can store the helper functions that you create. They'll be accessible from everywhere on your app and the'll be auto-included.
+
+
+###App/Views
+
 ###Mappings
+
+In order to create a new entity (or model) on Makiavelo, we need to first create a mapping for it. Mappings tell Makiavelo the basic structure of the entity as well as the validations that we'll have in place for that structure.
+To define this mappings, we use YAML files inside the mappings folder.
+Here's an example of what a mapping for a user entity would look like:
+
+_user.yml_
+```yaml
+crud:
+	entity:
+		name: User
+		fields:
+			first_name: string
+			last_name: string
+			birth_date: date
+			email: string
+			password: string
+		validations:
+			birth_date: [presence, date]
+			email: [presence, email]
+			password: [presence]
+
+```
+
+Once we have our _user.yml_ ready, we execute the following command from the terminal:
+
+`./makiavelo.php g crud user.yml`
+
+The framework will then take the following actions:
+
++ Create the entity class based on our mapping file and store it on the `entities` folder.
++ Create the controller called UserControllerClass, with the basic crud methods and store it on the `controllers` folder.
++ Create the basic crud routes for our entity and add them to the `routes.php` file.
++ Create the SQL file with the create table statement and store it on the `sql/creates` folder.
++ Create the SQL helper files, with the basic crud functions you'll need to access the database (such as save_user, load_user, etc) and store it on the `sql/helpers` folder.
++ Create the basic views required for all the crud actions (show, edit, new, _form) and store them on the `views/User` folder.
+
+_That's right!_ Makiavelo just did all that for you!
+
+The next logical step would be to load the SQL file into the database, and ideally, Makiavelo would provide a way to do that for you, but right now, that's not implemented, so you'll have to do something like this: `mysql -u[username] -p -h[yourhost] [yourdatabase] < app/sql/creates/user.yml`
+This will go away soon, promiss!!
+
+After loading the SQL into your database, you're ready to start creating new users, cool uh!? Just go to the url created for you, and you'll see what I mean (i.e: yourhost.com/user/new will take you to the new user form).
+
+###App/SQL/Helpers
+###App/SQL/Creates
+
 ###Public
+
+The public folder contains all the assets for your application. It'll come with 3 folders which you'll have to use for each time of asset:
+
+* javascripts: It'll contain all the javascript files.
+* img: It'll contain all images for your application.
+* stylesheets: It'll contain all css files for your application.
+
+Whatever your store inside public, you'll be able to access it directly like so: `yourdomain.com/public/yourfolder/yourfile.js`
+
 ###Lib
 
 ##Using the framework
