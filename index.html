@@ -28,32 +28,456 @@
     <div id="content-wrapper">
       <div class="inner clearfix">
         <section id="main-content">
-          <h3>Welcome to GitHub Pages.</h3>
+          <h1>Makiavelo</h1>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<p>Yet Another PHP Web Framework. This is my take at the problem: creating a framework capable of making the developer's life easier and 
+helping improve development time.</p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
+<h2>Sample included</h2>
+
+<p>The current repository contains code within the <code>app</code> folder, which is where the web application's code would reside. That is the code for a very basic example of how to use some of the tools provided by the framework to create a (yet again) super basic bloging app.</p>
+
+<h2>Basic layout</h2>
+
+<p>I've developed this idea over time, after working for a while with Ruby on Rails, so there will be a lot of similarities. I tried to port as many features as I could.</p>
+
+<h2>jQuery &amp; Bootstrap</h2>
+
+<p>In order to help with the development speed, the framework comes bundled with the following packages:</p>
+
+<ul>
+<li>jQuery 1.8.2</li>
+<li>jQueryUI 1.8.23</li>
+<li>jQuery.timePicker</li>
+<li>Bootstrap</li>
+</ul><h2>Folder structure</h2>
+
+<h3>App/Controllers</h3>
+
+<p>All controllers will be store inside this folder.
+The controller files and their classes will follow a simple naming convention:</p>
+
+<p>Since controllers are usually created to deal with a specific entity (usually but not always), we need to follow these conventions:</p>
+
+<ul>
+<li>Controller file is named as follows: [EntityName]Controller.php</li>
+<li>Controller class is named as follows: [EntityName]Controller and extends the class <code>ApplicationController</code>
+</li>
+</ul><h3>App/Entities</h3>
+
+<p>This folder contains all the entities for your application. They'll be auto-required when first called and must follow a naming convention in order to be found: 
+This convention is pretty simple, just name your file as follows: [YourEntityName]Class.php</p>
+
+<p>The name of the entity should always be camel-case and the first character be uppercased. 
+Finally, your entity should not have the "Class" part on it's name. So for a user entity, you'll have the following:</p>
+
+<ul>
+<li>A file called <code>UserClass.php</code> inside the entities folder.</li>
+<li>A class called <code>User</code> inside the <code>UserClass.php</code> file. <code>User</code> will extend <code>MakiaveloEntity</code>.</li>
+</ul><h3>App/Helpers</h3>
+
+<p>This is a purely organizational folder. In here you can store the helper functions that you create. They'll be accessible from everywhere on your app and the'll be auto-included.</p>
+
+<h3>App/Views</h3>
+
+<p>Inside this folder Makiavelo will store all the view files. Currently, the framework does not support any kind of templating engine, but we eventually want to add that in.
+As of this writing, all view files will have the extension "html.php", thus, they're all php files and you can write php code inside them as you would normally.
+The only thing to take into consideration, is that the files will be stored inside folders named after the corresponding entity.</p>
+
+<h3>Mappings</h3>
+
+<p>In order to create a new entity (or model) on Makiavelo, we need to first create a mapping for it. Mappings tell Makiavelo the basic structure of the entity as well as the validations that we'll have in place for that structure.
+To define this mappings, we use YAML files inside the mappings folder.
+Here's an example of what a mapping for a user entity would look like:</p>
+
+<p><em>user.yml</em></p>
+
+<div class="highlight"><pre><span class="l-Scalar-Plain">crud</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">entity</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">User</span>
+        <span class="l-Scalar-Plain">fields</span><span class="p-Indicator">:</span>
+            <span class="l-Scalar-Plain">first_name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">string</span>
+            <span class="l-Scalar-Plain">last_name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">string</span>
+            <span class="l-Scalar-Plain">birth_date</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">date</span>
+            <span class="l-Scalar-Plain">email</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">string</span>
+            <span class="l-Scalar-Plain">password</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">string</span>
+        <span class="l-Scalar-Plain">validations</span><span class="p-Indicator">:</span>
+            <span class="l-Scalar-Plain">birth_date</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="nv">presence</span><span class="p-Indicator">,</span> <span class="nv">date</span><span class="p-Indicator">]</span>
+            <span class="l-Scalar-Plain">email</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="nv">presence</span><span class="p-Indicator">,</span> <span class="nv">email</span><span class="p-Indicator">]</span>
+            <span class="l-Scalar-Plain">password</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="nv">presence</span><span class="p-Indicator">]</span>
+
+</pre></div>
+
+<p>Once we have our <em>user.yml</em> ready, we execute the following command from the terminal:</p>
+
+<p><code>./makiavelo.php g crud user.yml</code></p>
+
+<p>The framework will then take the following actions:</p>
+
+<ul>
+<li>Create the entity class based on our mapping file and store it on the <code>entities</code> folder.</li>
+<li>Create the controller called UserControllerClass, with the basic crud methods and store it on the <code>controllers</code> folder.</li>
+<li>Create the basic crud routes for our entity and add them to the <code>routes.php</code> file.</li>
+<li>Create the SQL file with the create table statement and store it on the <code>sql/creates</code> folder.</li>
+<li>Create the SQL helper files, with the basic crud functions you'll need to access the database (such as save_user, load_user, etc) and store it on the <code>sql/helpers</code> folder.</li>
+<li>Create the basic views required for all the crud actions (show, edit, new, _form) and store them on the <code>views/User</code> folder.</li>
+</ul><p><em>That's right!</em> Makiavelo just did all that for you!</p>
+
+<p>The next logical step would be to load the SQL file into the database, and ideally, Makiavelo would provide a way to do that for you, but right now, that's not implemented, so you'll have to do something like this: <code>mysql -u[username] -p -h[yourhost] [yourdatabase] &lt; app/sql/creates/user.yml</code>
+This will go away soon, promiss!!</p>
+
+<p>After loading the SQL into your database, you're ready to start creating new users, cool uh!? Just go to the url created for you, and you'll see what I mean (i.e: yourhost.com/user/new will take you to the new user form).</p>
+
+<h3>App/SQL/Helpers</h3>
+
+<p>SQL helpers are functions created automatically by the CRUD generator to help the developer access the database and work with the entities easily.
+All helper functions are named using the following convention:</p>
+
+<p><code>[action]_[underscored entity name]</code></p>
+
+<p>For example, if we created an entity called User using the generator, we'd end up with the following sql helper functions:</p>
+
+<ul>
+<li>
+<strong>save_user</strong>: Saves the entity on the database, receives the entity as a paremeter.</li>
+<li>
+<strong>update_user</strong>: Updates the entity on the database, receives the entity as a paremeter.</li>
+<li>__delete_user: Deletes the entity from the database. It receives the ID as a paremter.</li>
+<li>
+<strong>load_user</strong>: Loads the user from the database and returns the user entity. Recieves an ID as paremeter.</li>
+<li>
+<strong>load_user_where</strong>: Loads the user from the database and returns the user entity. Receives a WHERE condition to look for the entity.</li>
+<li>
+<strong>list_user</strong>: Returns a list of user entities. Receives 2 optional parameters: order and limit</li>
+</ul><h3>App/SQL/Creates</h3>
+
+<p>Inside this folder, Makiavelo will store the SQL files autogenerated when creating a new entity. Currently, these files will need to be manually loaded into the database to create the table.</p>
+
+<h3>Public</h3>
+
+<p>The public folder contains all the assets for your application. It'll come with 3 folders which you'll have to use for each time of asset:</p>
+
+<ul>
+<li>javascripts: It'll contain all the javascript files.</li>
+<li>img: It'll contain all images for your application.</li>
+<li>stylesheets: It'll contain all css files for your application.</li>
+</ul><p>Whatever your store inside public, you'll be able to access it directly like so: <code>yourdomain.com/public/yourfolder/yourfile.js</code></p>
+
+<h3>Lib</h3>
+
+<p>The lib folder is meant to contain all extra code added by the developer and also, the code for the user defined tasks.</p>
+
+<h2>Using the framework</h2>
+
+<p>There are two sides to Makiavelo:</p>
+
+<ul>
+<li>The command line, which has some usefull commands to do things like creating the tables for the different entities, or creating the basic required files for a standard CRUD system.</li>
+<li>The web interface, which would the site/app being developed.</li>
+</ul><h3>Command line</h3>
+
+<p>There are several usefull commands to execute from the command line.
+As of right now, the frameworks provides a file named: <code>makiavelo.php</code> which should have execution privileges. Executing that file alone, will list the different commands available:</p>
+
+<ul>
+<li>Generator command (g): This command tells the framework to generate one of many things:
+
+<ul>
+<li>CRUD (crud): This attribute for the generator command will tell it to generate the basic structure for a CRUD system for a specific entity.</li>
+<li>controller: This attribute will tell the generator to create a controller and it's views.</li>
+</ul>
+</li>
+<li>Database creator (db:create): It'll connect to our database using the configuration file and it'll create the database for our application</li>
+<li>Database loader (db:load): It'll create all required tables for all our entities. As of right now, it doesn't allow us to pick which entity, so it'll load all of them.</li>
+<li>Tasks: Makiavelo has support for tasks (similar to the ones used on RoR with Rake).</li>
+</ul><h4>Some examples:</h4>
+
+<p><strong>Generating a basic CRUD system for our entity called Post</strong></p>
+
+<pre><code>./makiavelo.php g crud post.yml
 </code></pre>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<p><strong>Running a task called "createSuperUser" on the task namespace "Setup"</strong></p>
 
-<h3>Designer Templates</h3>
+<pre><code>./makiavelo.php task setup:createSuperUser
+</code></pre>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<h3>Installation/Setup</h3>
 
-<h3>Rather Drive Stick?</h3>
+<p>In order to be able to load the application you developed with Makiavelo, you'll need to following:</p>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<ul>
+<li>Allow mod_rewrite on your apache config.</li>
+<li>Allow the use of .htaccess files</li>
+<li>Create a virtual host for your app, pointing to it's "public" folder</li>
+<li>Configure the database access on the <code>config/database.yml</code> file. Right now, only MySQL is supported.</li>
+<li>Configure your <code>/etc/hosts</code> file to point the new virtual host to your localhost</li>
+<li>????</li>
+<li>Profit!</li>
+</ul><p><em>NOTE</em>: I need to add more details to each point, but it should be pretty straight forward.</p>
 
-<h3>Authors and Contributors</h3>
+<h1>More details</h1>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<h2>Routes</h2>
 
-<h3>Support or Contact</h3>
+<p>The aim regarding routes, is to keep them REST oriented. Right now, the only two verbs supported are GET and POST, so we need to work on that front.</p>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+<p>When using the CRUD generator, the system will automatically generate the required routes for all of the basic CRUD operations and it'll store that information on the <code>routes.php</code> file, located on the <code>config</code> folder.</p>
+
+<p>An example of what can be found in that file is:</p>
+
+<div class="highlight"><pre><span class="nv">$_ROUTES</span><span class="p">[]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s2">"list"</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s2">"url"</span> <span class="o">=&gt;</span> <span class="s2">"/post/"</span><span class="p">,</span> <span class="s2">"controller"</span> <span class="o">=&gt;</span> <span class="s2">"Post"</span><span class="p">,</span> <span class="s2">"action"</span> <span class="o">=&gt;</span> <span class="s2">"index"</span><span class="p">),</span>
+    <span class="s2">"create"</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s2">"url"</span> <span class="o">=&gt;</span> <span class="s2">"/post/create"</span><span class="p">,</span> <span class="s2">"controller"</span> <span class="o">=&gt;</span> <span class="s2">"Post"</span><span class="p">,</span> <span class="s2">"action"</span> <span class="o">=&gt;</span> <span class="s2">"create"</span><span class="p">,</span> <span class="s2">"via"</span> <span class="o">=&gt;</span> <span class="s2">"post"</span><span class="p">,</span> <span class="s2">"role"</span> <span class="o">=&gt;</span> <span class="s2">"user"</span><span class="p">),</span>
+    <span class="s2">"new"</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s2">"url"</span> <span class="o">=&gt;</span> <span class="s2">"/post/new"</span><span class="p">,</span> <span class="s2">"controller"</span> <span class="o">=&gt;</span> <span class="s2">"Post"</span><span class="p">,</span> <span class="s2">"action"</span> <span class="o">=&gt;</span> <span class="s2">"new"</span><span class="p">,</span> <span class="s2">"role"</span> <span class="o">=&gt;</span> <span class="s2">"user"</span><span class="p">),</span>
+    <span class="s2">"retrieve"</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s2">"url"</span> <span class="o">=&gt;</span> <span class="s2">"/post/:id"</span><span class="p">,</span> <span class="s2">"controller"</span> <span class="o">=&gt;</span> <span class="s2">"Post"</span><span class="p">,</span> <span class="s2">"action"</span> <span class="o">=&gt;</span> <span class="s2">"show"</span><span class="p">,</span> <span class="s2">"via"</span> <span class="o">=&gt;</span> <span class="s2">"get"</span><span class="p">,</span> <span class="s2">"role"</span> <span class="o">=&gt;</span> <span class="s2">"user"</span> <span class="p">),</span>
+    <span class="s2">"update"</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s2">"url"</span> <span class="o">=&gt;</span> <span class="s2">"/post/:id/edit"</span><span class="p">,</span> <span class="s2">"controller"</span> <span class="o">=&gt;</span> <span class="s2">"Post"</span><span class="p">,</span> <span class="s2">"action"</span> <span class="o">=&gt;</span> <span class="s2">"edit"</span><span class="p">,</span> <span class="s2">"role"</span> <span class="o">=&gt;</span> <span class="s2">"user"</span><span class="p">),</span>
+    <span class="s2">"delete"</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s2">"url"</span> <span class="o">=&gt;</span> <span class="s2">"/post/:id/delete"</span><span class="p">,</span> <span class="s2">"controller"</span> <span class="o">=&gt;</span> <span class="s2">"Post"</span><span class="p">,</span> <span class="s2">"action"</span> <span class="o">=&gt;</span> <span class="s2">"delete"</span><span class="p">,</span> <span class="s2">"via"</span> <span class="o">=&gt;</span> <span class="s2">"post"</span><span class="p">,</span> <span class="s2">"role"</span> <span class="o">=&gt;</span> <span class="s2">"user"</span><span class="p">)</span>
+    <span class="p">);</span> 
+
+</pre></div>
+
+<p>That will create all the required routes for every action needed.
+Here is an explanation of each of the keys of those arrays:</p>
+
+<ul>
+<li>url: This will contain the URL for the action, can be anything, and can contain attributes in the form of <code>:ATTR_NAME</code>.</li>
+<li>controller: The name of the controller, without the "Controller" part (all controllers have that word on the class name).</li>
+<li>action: The name of the method to execute from the controller. It'll map to a method called: <code>ACTION_NAMEAction</code> (i,e: indexAction).</li>
+<li>via: This is an optional parameter, and will force the route to work using the specified HTTP verb (only values supported right now are <code>get</code> and <code>post</code>). The default value here is <code>get</code>.</li>
+<li>role: Another optional parameter, usefull when your application needs to filter out actions based on the role of the user. </li>
+</ul><p>Each entry in the array, will auto-generate a url helper function, so you can use that instead of hard-coding the urls all throught the site.</p>
+
+<h3>URL helpers</h3>
+
+<p>The helpers are created dinamically, and they basically return the url, replacing any attribute with the correct value.
+Here is how the helper functions are named:</p>
+
+<pre><code>[underscored_controller_name]_[underscored_action_name]_path
+</code></pre>
+
+<p>For instance, using the above example, we will have:</p>
+
+<ul>
+<li>
+<code>post_list_path()</code> to redirect to the list of all posts.</li>
+<li>
+<code>post_create_path()</code> will save the post information.</li>
+<li>
+<code>post_retrieve_path($post)</code> will take us to the show view of the post controller, and it'll grab the attribute <code>id</code> from the entity passed as a parameter.</li>
+<li>and so on.</li>
+</ul><p>There are other url helper functions are can be use, when, for instance, you need to get the edit path for a particular entity, but you don't know the entity's class.</p>
+
+<p>These helpers are:</p>
+
+<ul>
+<li>
+<strong>show_path_for</strong> : Receives an entity as parameter, and it'll return the right path for the show view of that entity.</li>
+<li>
+<strong>edit_path_for</strong> : Receives an entity as parameter, and it'll return the right path for the edit  view of that entity.</li>
+<li>
+<strong>delete_path_for</strong> : Receives an entity as parameter, and it'll return the right path for the delete action of that entity.</li>
+</ul><h2>HTML helpers</h2>
+
+<p>Makiavelo provides some basic html helper functions to ease the development process.</p>
+
+<p>There are two types of functions, the ones that require an entity and the generic ones.</p>
+
+<h4>Entity related functions</h4>
+
+<ul>
+<li>form_for</li>
+</ul><p>The following entity html helpers receive the entity as the first parameter, the name of the property as the second one, an optional label value (it'll add a label element for that form element) and finally an array of html options (for setting id, class, html attributes, etc).</p>
+
+<ul>
+<li>text_field</li>
+<li>password_field</li>
+<li>hidden_field</li>
+<li>select_field</li>
+<li>time_field: This helper will create an input field (of type text) that has a timePicker associated with it.</li>
+<li>date_field: This helper will create an input field (of type text) that has a jQuery calendar associated with it.</li>
+<li>file_field </li>
+<li>boolean_field</li>
+<li>email_field</li>
+</ul><h3>Generic helper functions</h3>
+
+<ul>
+<li>form_for_tag</li>
+<li>end_form_tag</li>
+<li>text_field_tag</li>
+<li>password_field_tag</li>
+<li>hidden_field_tag</li>
+<li>select_field_tag</li>
+<li>time_field_tag</li>
+<li>date_field_tag</li>
+<li>file_field _tag</li>
+<li>boolean_field_tag</li>
+<li>email_field_tag</li>
+<li>link_to</li>
+<li>submit</li>
+<li>image_tag</li>
+</ul><h2>Validations</h2>
+
+<p>Makiavelo allows for easy validation on entities before saving them to the database. In order to set the validations, you need to set a specific private attribute called <code>$validations</code>.
+That attribute needs to have the following structure:</p>
+
+<div class="highlight"><pre><span class="nv">$validations</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">"attr_name"</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s2">"validation_name_1"</span><span class="p">,</span> <span class="s2">"validation_name_2"</span><span class="p">,</span> <span class="o">....</span><span class="p">))</span>
+</pre></div>
+
+<p>Currently the following validations are supported:</p>
+
+<ul>
+<li>presence</li>
+<li>email</li>
+<li>integer</li>
+</ul><p>The plan is to allow for custom validations to be created by the developer.</p>
+
+<p><em>A simple example</em>: The following code will setup the Post entity to validate for it's content, title and owner's email fields:</p>
+
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">PostClass</span> <span class="k">extends</span> <span class="nx">MakiaveloEntity</span> <span class="p">{</span>
+
+    <span class="k">private</span> <span class="nv">$title</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nv">$content</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nv">$owner_email</span><span class="p">;</span>
+
+    <span class="k">static</span> <span class="k">public</span> <span class="nv">$validations</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">"title"</span><span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">'presence'</span><span class="p">),</span>
+                                       <span class="s2">"content"</span><span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">'presence'</span><span class="p">),</span>
+                                       <span class="s2">"owner_email"</span><span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">'presence'</span><span class="p">,</span> <span class="s1">'email'</span><span class="p">),</span>
+                                <span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+<h2>Security</h2>
+
+<p>Currently Makiavelo supports the definition of "roles" for a given entity (normally a user) and it'll create a hierarchy, based on the order in which the roles are defined.
+Lets look at an example of defining roles:</p>
+
+<div class="highlight"><pre> <span class="nv">$__SECURITY</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s2">"roles"</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s2">"anonymous"</span><span class="p">,</span> <span class="s2">"user"</span><span class="p">,</span> <span class="s2">"admin"</span><span class="p">),</span>
+    <span class="s2">"class_name"</span> <span class="o">=&gt;</span> <span class="s2">"User"</span>
+    <span class="p">);</span>
+
+</pre></div>
+
+<p>Using the special array <code>$__SECURITY</code> we're able to set the different access roles, and the entity which will be used with them.
+According to our definition, the "anonymous" user role is assigned to the new visitor before they login. They, after they login, a role will be assigned. And as expected, the hierarchy is: admin &gt; user &gt; anonymous</p>
+
+<h2>Allowing or denying access to a specific role</h2>
+
+<p>How do we use the above information to allow or deny certain roles from accesing part of our site/web app?
+Easy! just add the minimum allowed role on the routes file, for each route you want to protect. 
+Lets look at an example:</p>
+
+<div class="highlight"><pre><span class="nv">$_ROUTES</span><span class="p">[]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s2">"list"</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s2">"url"</span> <span class="o">=&gt;</span> <span class="s2">"/post/"</span><span class="p">,</span> <span class="s2">"controller"</span> <span class="o">=&gt;</span> <span class="s2">"Post"</span><span class="p">,</span> <span class="s2">"action"</span> <span class="o">=&gt;</span> <span class="s2">"index"</span><span class="p">,</span> <span class="s2">"role"</span> <span class="o">=&gt;</span> <span class="s2">"user"</span><span class="p">),</span>
+    <span class="s2">"create"</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s2">"url"</span> <span class="o">=&gt;</span> <span class="s2">"/post/create"</span><span class="p">,</span> <span class="s2">"controller"</span> <span class="o">=&gt;</span> <span class="s2">"Post"</span><span class="p">,</span> <span class="s2">"action"</span> <span class="o">=&gt;</span> <span class="s2">"create"</span><span class="p">,</span> <span class="s2">"via"</span> <span class="o">=&gt;</span> <span class="s2">"post"</span><span class="p">,</span> <span class="s2">"role"</span> <span class="o">=&gt;</span> <span class="s2">"admin"</span><span class="p">),</span>
+    <span class="s2">"new"</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s2">"url"</span> <span class="o">=&gt;</span> <span class="s2">"/post/new"</span><span class="p">,</span> <span class="s2">"controller"</span> <span class="o">=&gt;</span> <span class="s2">"Post"</span><span class="p">,</span> <span class="s2">"action"</span> <span class="o">=&gt;</span> <span class="s2">"new"</span><span class="p">,</span> <span class="s2">"role"</span> <span class="o">=&gt;</span> <span class="s2">"admin"</span><span class="p">),</span>
+    <span class="s2">"retrieve"</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s2">"url"</span> <span class="o">=&gt;</span> <span class="s2">"/post/:id"</span><span class="p">,</span> <span class="s2">"controller"</span> <span class="o">=&gt;</span> <span class="s2">"Post"</span><span class="p">,</span> <span class="s2">"action"</span> <span class="o">=&gt;</span> <span class="s2">"show"</span><span class="p">,</span> <span class="s2">"via"</span> <span class="o">=&gt;</span> <span class="s2">"get"</span><span class="p">,</span> <span class="s2">"role"</span> <span class="o">=&gt;</span> <span class="s2">"user"</span> <span class="p">),</span>
+    <span class="s2">"update"</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s2">"url"</span> <span class="o">=&gt;</span> <span class="s2">"/post/:id/edit"</span><span class="p">,</span> <span class="s2">"controller"</span> <span class="o">=&gt;</span> <span class="s2">"Post"</span><span class="p">,</span> <span class="s2">"action"</span> <span class="o">=&gt;</span> <span class="s2">"edit"</span><span class="p">,</span> <span class="s2">"role"</span> <span class="o">=&gt;</span> <span class="s2">"admin"</span><span class="p">),</span>
+    <span class="s2">"delete"</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s2">"url"</span> <span class="o">=&gt;</span> <span class="s2">"/post/:id/delete"</span><span class="p">,</span> <span class="s2">"controller"</span> <span class="o">=&gt;</span> <span class="s2">"Post"</span><span class="p">,</span> <span class="s2">"action"</span> <span class="o">=&gt;</span> <span class="s2">"delete"</span><span class="p">,</span> <span class="s2">"via"</span> <span class="o">=&gt;</span> <span class="s2">"post"</span><span class="p">,</span> <span class="s2">"role"</span> <span class="o">=&gt;</span> <span class="s2">"admin"</span><span class="p">)</span>
+    <span class="p">);</span> 
+</pre></div>
+
+<p>With the above configuration, we're allowing only logged in users to interact with the post urls. And only admins can create d, update and delte posts.</p>
+
+<h2>Database connection</h2>
+
+<p>Currently Makiavelo only supports MySQL databases.
+The connection information is defined inside the <code>database.yml</code> file, located on the <code>config</code> folder.</p>
+
+<h2>Localization</h2>
+
+<p>Makiavelo tries to handle internationalization just as Rails does. Inside the project, there is a sub-project (that we should eventually move out into its own project) called I18n, which provides the same helpers.</p>
+
+<h3>Locale files</h3>
+
+<p>Inside the <code>config/locales/</code> folder the use must create the different locale files, organized by folders named after the desired language. 
+i.e The folder <em>config/locales/en</em> will contain all english localization strings, and a <em>config/locales/es</em> will have all the spanish equivalents.
+The format for the localization files is the same as the one used by I18n on rails, a YAML file with the following structure:</p>
+
+<div class="highlight"><pre><span class="l-Scalar-Plain">en</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">usuario</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">atributos</span><span class="p-Indicator">:</span>
+            <span class="l-Scalar-Plain">nombre</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Name</span>
+            <span class="l-Scalar-Plain">edad</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Age</span>
+</pre></div>
+
+<h3>Helper functions</h3>
+
+<p>The following helper functions are provided:</p>
+
+<ul>
+<li>
+<strong>t</strong>: Short for <code>I18n::translate</code>, which receives a string parameter that acts as the key path inside the yml and returns the translation string or an error message if the key path is invalid. Using the yml from above, you could grab the translation for the <code>nombre</code> attribute of <code>usuario</code> like so: <code>t("usuario.atributos.nombre")</code>
+</li>
+<li>
+<strong>l</strong>: Short for <code>I18n::localize</code>, which takes a time or date value and returns a string formatted in the right format.</li>
+</ul><h3>Setting the current locale</h3>
+
+<p>The I18n module provides a <code>config</code> method, which takes an array as an attribute. the array provided, will contain all the configuration options for the module.</p>
+
+<p>The current supported configuration values are:</p>
+
+<ul>
+<li>
+<strong>locale</strong>: The desired locale to use.</li>
+</ul><p>So, configuring the locale to <strong>es</strong> would be done like this: </p>
+
+<div class="highlight"><pre> <span class="nx">I18n</span><span class="o">::</span><span class="na">config</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s2">"locale"</span> <span class="o">=&gt;</span> <span class="s2">"es"</span><span class="p">));</span>
+</pre></div>
+
+<h2>Flash</h2>
+
+<p>Makiavelo tries to borrow the concept of flash message from Rails (and other frameworks) using the <code>flash</code> object available to the developer inside every controller.
+The flash object implements the magic method <code>__call</code>, so the way to use this object is to call the method desired with the "set" prefix when we want to set the message, and the "get" prefix when we want to get the saved message.
+We'll only be able to get the message once, after that, it'll be removed from the current session.</p>
+
+<p><em>Example</em></p>
+
+<div class="highlight"><pre><span class="c1">//... code snippet inside a controller</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">flash</span><span class="o">-&gt;</span><span class="na">setError</span><span class="p">(</span><span class="s2">"There was a problem saving the user, please try again"</span><span class="p">);</span>
+<span class="c1">//...more code goes here...</span>
+</pre></div>
+
+<p>Now, inside the view:</p>
+
+<div class="highlight"><pre><span class="o">&lt;</span><span class="nx">p</span> <span class="nx">class</span><span class="o">=</span><span class="s2">"error"</span><span class="o">&gt;&lt;?=</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">flash</span><span class="o">-&gt;</span><span class="na">getError</span><span class="p">()</span><span class="cp">?&gt;</span><span class="x">&lt;/p&gt;</span>
+</pre></div>
+
+<p>That example uses the "getError" and "setError" methods, but they could've easily been "getMyErrorMessage" and "setMyErrorMessage".</p>
+
+<h2>Tasks</h2>
+
+<p>Makiavelo attempts to "borrow" the concept of tasks from Ruby on Rails, by allowing the developer to define custom methods that can be executed from the command line.</p>
+
+<p>Lets look at an example of how you'd execute a task, and then, we'll talk about how to define one:</p>
+
+<p><code>./makiavelo.php task users:createFirsUser</code></p>
+
+<p>In that line, we're telling Makiavelo to execute a task within the "users" namespace, called "createFirstUser". That translates to the execution of the method "createFirstUser" from the class "UsersTask".</p>
+
+<p>In order to define a task, the dev will have to following these conventions:</p>
+
+<ul>
+<li>The file will have to be saved inside the <strong>/lib/tasks</strong> folder.</li>
+<li>The file will have to be named like this: [underscored namespace]_task.php</li>
+<li>The class will have to be called [CamelCased namespace]Task.</li>
+</ul><h1>To-Do</h1>
+
+<p>Makiavelo is an ongoing project, and as such, it still requires a lot of testing, refactor and rethinking of modules. 
+Some of the areas that need mayor work are:</p>
+
+<ul>
+<li>
+<strong>DB Access</strong>: I'm currently using mysql_* functions, but in the future I wanted to improve the code, by using PDO and forgetting about the SQL helpers that Makiavelo creates for every entity.</li>
+<li>
+<strong>Routes</strong>: Currently the global routes array feels wrong, there should be an easier, more elegant way of handling routes.</li>
+<li>
+<strong>Templating</strong>: The original idea for Makiavelo, was to force the use of HAML, but the current implementation made it quite difficult to implement, so we need to refactor the way views and partials are handled, in order to be able to use HAML and any other templating engine.</li>
+<li><strong>Lots more!</strong></li>
+</ul><h1>Contribute</h1>
+
+<p>Please, feel free to  fork, improve and create a pull request! All contributions are welcomed! :)</p>
         </section>
 
         <aside id="sidebar">
