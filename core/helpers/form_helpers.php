@@ -130,11 +130,13 @@ function boolean_field($en, $attr, $label = null) {
 	if($label == null) {
 		$label_text = Makiavelo::titlelize($attr);
 	}
+
+	$checked = ($en->$attr == 1) ? "checked" : "";
 	$html .= '<label for="'.$attr.'">'.$label_text.'</label>';
 	$html .= '<input type="checkbox" 
 				name="' . $en->__get_entity_name() . '['.$attr.']" 
 				id="' . $en->__get_entity_name() . '_' .$attr.'" 
-				value="' . $en->$attr . '" />';
+				' . $checked . ' />';
 	$html .= "</div>";
 
 	return $html;

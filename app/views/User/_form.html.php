@@ -14,6 +14,7 @@
       </div>
       <?php } ?>
     <?=text_field($this->entity, "username")?>
+    <?=boolean_field($this->entity, "is_checked")?>
   
     <?=text_field($this->entity, "email")?>
   

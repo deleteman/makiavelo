@@ -22,7 +22,7 @@
 				<ul class="nav">
 					<? if(user_logged_in()) { ?>
 					<li class="hello-user">
-						Hola <?= current_user()->username?>
+						Hey <?= current_user()->username?>
 					</li>
 					<li  >
 						<a href="<?=post_new_path()?>" >New Post</a>

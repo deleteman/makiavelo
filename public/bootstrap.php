@@ -57,11 +57,12 @@ while(false !== ($entry = $d->read())) {
 
 
 //Includes all generic helpers
-$sql_helper_folder = ROOT_PATH . Makiavelo::CODE_HELPERS_FOLDER;
-$d = dir($sql_helper_folder);
+$code_helper_folder = ROOT_PATH . Makiavelo::CODE_HELPERS_FOLDER;
+Makiavelo::info("loading code helpers from: " . $code_helper_folder);
+$d = dir($code_helper_folder);
 while(false !== ($entry = $d->read())) {
 	if($entry[0] != ".") {
-		include($sql_helper_folder . "/" . $entry);
+		include($code_helper_folder . "/" . $entry);
 	}
 }
 

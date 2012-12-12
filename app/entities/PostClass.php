@@ -20,4 +20,8 @@ private $owner_id; //type: integer
 	public function __get($name) {
 		return $this->$name;
 	}
+
+	public function getOwner() {
+		return load_user($this->owner_id);
+	}
 }

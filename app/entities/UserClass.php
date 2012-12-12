@@ -7,6 +7,8 @@ private $updated_at; //type: datetime
 private $username; //type: string
 private $email; //type: string
 private $password; //type:srting
+private $role; //type:string
+private $is_checked; //type:boolean
 
 
 	static public $validations = array("name" => array("presence"),

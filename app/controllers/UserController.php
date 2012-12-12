@@ -28,6 +28,7 @@
 	public function createAction() {
 		$entity = new User();
 		$entity->load_from_array($this->request->getParam("user"));
+		$entity->role = "user";
 		if(save_user($entity)) {
 			login_user($entity->email, $entity->password);
 			$this->redirect_to(home_root_path_path());

@@ -8,7 +8,7 @@ function save_user($entity) {
 		if($entity->validate()) {
 			global $__db_conn;	
 
-			$sql = "INSERT INTO user(created_at,updated_at,username,email,password) values (':created_at:',':updated_at:',':username:',':email:',':password:')";
+			$sql = "INSERT INTO user(role, is_checked,created_at,updated_at,username,email,password) values (':role:', ':is_checked:', ':created_at:',':updated_at:',':username:',':email:',':password:')";
 
 			$sql = str_replace(":created_at:", Date("Y-m-d"), $sql);
 			$sql = str_replace(":updated_at:", Date("Y-m-d"), $sql);
@@ -32,7 +32,7 @@ function update_user($en) {
 	if($en->validate()) {
 		global $__db_conn;	
 
-		$sql = str_replace(":id:", $en->id, "UPDATE user SET id=':id:',created_at=':created_at:',updated_at=':updated_at:',username=':username:',email=':email:',password=':password:' WHERE id = :id:"); #'UPDATE tipo_buque set name="' . $en->name .'" WHERE id=' . $en->id;
+		$sql = str_replace(":id:", $en->id, "UPDATE user SET role = ':role:', is_checked = ':is_checked:', id=':id:',created_at=':created_at:',updated_at=':updated_at:',username=':username:',email=':email:',password=':password:' WHERE id = :id:"); #'UPDATE tipo_buque set name="' . $en->name .'" WHERE id=' . $en->id;
 
 		$sql = str_replace(":updated_at:", Date("Y-m-d"), $sql);
 
