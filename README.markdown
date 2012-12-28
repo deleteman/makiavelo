@@ -93,7 +93,7 @@ The framework will then take the following actions:
 
 _That's right!_ Makiavelo just did all that for you!
 
-The next logical step would be to load the SQL file into the database, and ideally, Makiavelo would provide a way to do that for you, but right now, that's not implemented, so you'll have to do something like this: `mysql -u[username] -p -h[yourhost] [yourdatabase] < app/sql/creates/user.yml`
+The next logical step would be to load the SQL file into the database, and ideally, Makiavelo would provide a way to do that for you, but right now, that's not implemented, so you'll have to do something like this: `mysql -u[username] -p -h[yourhost] [yourdatabase] < app/sql/creates/user.sql
 This will go away soon, promiss!!
 
 After loading the SQL into your database, you're ready to start creating new users, cool uh!? Just go to the url created for you, and you'll see what I mean (i.e: yourhost.com/user/new will take you to the new user form).
