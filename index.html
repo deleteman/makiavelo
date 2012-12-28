@@ -123,7 +123,7 @@ Here's an example of what a mapping for a user entity would look like:</p>
 <li>Create the basic views required for all the crud actions (show, edit, new, _form) and store them on the <code>views/User</code> folder.</li>
 </ul><p><em>That's right!</em> Makiavelo just did all that for you!</p>
 
-<p>The next logical step would be to load the SQL file into the database, and ideally, Makiavelo would provide a way to do that for you, but right now, that's not implemented, so you'll have to do something like this: <code>mysql -u[username] -p -h[yourhost] [yourdatabase] &lt; app/sql/creates/user.yml</code>
+<p>The next logical step would be to load the SQL file into the database, and ideally, Makiavelo would provide a way to do that for you, but right now, that's not implemented, so you'll have to do something like this: `mysql -u[username] -p -h[yourhost] [yourdatabase] &lt; app/sql/creates/user.sql
 This will go away soon, promiss!!</p>
 
 <p>After loading the SQL into your database, you're ready to start creating new users, cool uh!? Just go to the url created for you, and you'll see what I mean (i.e: yourhost.com/user/new will take you to the new user form).</p>
@@ -285,21 +285,75 @@ Here is how the helper functions are named:</p>
 
 <h4>Entity related functions</h4>
 
-<ul>
-<li>form_for</li>
-</ul><p>The following entity html helpers receive the entity as the first parameter, the name of the property as the second one, an optional label value (it'll add a label element for that form element) and finally an array of html options (for setting id, class, html attributes, etc).</p>
+<h4><em>form_for</em></h4>
 
-<ul>
-<li>text_field</li>
-<li>password_field</li>
-<li>hidden_field</li>
-<li>select_field</li>
-<li>time_field: This helper will create an input field (of type text) that has a timePicker associated with it.</li>
-<li>date_field: This helper will create an input field (of type text) that has a jQuery calendar associated with it.</li>
-<li>file_field </li>
-<li>boolean_field</li>
-<li>email_field</li>
-</ul><h3>Generic helper functions</h3>
+<p>The following entity html helpers receive the entity as the first parameter, the name of the property as the second one, an optional label value (it'll add a label element for that form element) and finally an array of html options (for setting id, class, html attributes, etc).</p>
+
+<h4><em>text_field</em></h4>
+
+<p>Returns the HTML code for a text field. </p>
+
+<p><strong>Parameters</strong></p>
+
+<ol>
+<li>$en: The entity we're working with.</li>
+<li>$attr: The name of the etity's attribute.</li>
+<li>$label: (Optional) If non-null, it'll add a label field surrounding the text field with the content we pass on this parameter.</li>
+<li>$html_attr: (Optiona) Array containing other html attributes for the input field. In a key =&gt; value format (i.e: <code>array("id" =&gt; "my_id")</code>)</li>
+</ol><h4><em>password_field</em></h4>
+
+<p>Returns the HTML code for an input field of type password. For more infor refer to the <code>text_field</code> helper.</p>
+
+<h4><em>hidden_field</em></h4>
+
+<p>Returns the HTML code for an input field of type hidden.</p>
+
+<p><strong>Parameters</strong></p>
+
+<ol>
+<li>$en: The entity we're working with.</li>
+<li>$attr: The attribute that we're referencing.</li>
+</ol><h5><em>select_field</em></h5>
+
+<p>Returns the HTML code for a select field and it's options.</p>
+
+<p><strong>Paramaters</strong></p>
+
+<ol>
+<li>$en: The entity we're working with.</li>
+<li>$attr: The attribute that we're referencing. If the value of this attriute equals the value of one of the options, that option will be auto-selected.</li>
+<li>$label: (Optional) If non-null, it'll add a label field surrounding the text field with the content we pass on this parameter.</li>
+<li>$options: (Optiona) Array containing other html attributes for the input field. In a key =&gt; value format (i.e: <code>array("id" =&gt; "my_id")</code>)</li>
+</ol><h4><em>time_field</em></h4>
+
+<p>Just like a text_field, but has a timePicker associated with it.</p>
+
+<h4><em>date_field</em></h4>
+
+<p>Just like a text_field, but has a jQuery calendar associated with it.</p>
+
+<h4><em>email_field</em></h4>
+
+<p>No difference with a text_field as of this writing.</p>
+
+<h4><em>file_field</em></h4>
+
+<p>Returns the HTML code for an input field of type file.</p>
+
+<p><strong>Parameters</strong>
+Refer to the parameters description of the <code>text_field</code> helper.</p>
+
+<h4><em>boolean_field</em></h4>
+
+<p>Returns the HTML code for a checkbox. If the value of the attribute used is "1" it'll auto-check the checkbox.</p>
+
+<p><strong>Parameters</strong></p>
+
+<ol>
+<li>$en: The entity we're working with.</li>
+<li>$attr: The attribute that we're referencing. If the value of this attriute equals the value of one of the options, that option will be auto-selected.</li>
+<li>$label: (Optional) If non-null, it'll add a label field surrounding the text field with the content we pass on this parameter.</li>
+</ol><h3>Generic helper functions</h3>
 
 <ul>
 <li>form_for_tag</li>
@@ -477,7 +531,8 @@ Some of the areas that need mayor work are:</p>
 <li><strong>Lots more!</strong></li>
 </ul><h1>Contribute</h1>
 
-<p>Please, feel free to  fork, improve and create a pull request! All contributions are welcomed! :)</p>
+<p>Please, feel free to  fork, improve and create a pull request! All contributions are welcomed! :)
+Also, if you want to get in touch with me, you can send e-mails to: deleteman[at]gmail[dot]com</p>
         </section>
 
         <aside id="sidebar">
