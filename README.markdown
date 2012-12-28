@@ -238,12 +238,16 @@ Makiavelo provides some basic html helper functions to ease the development proc
 
 There are two types of functions, the ones that require an entity and the generic ones.
 
-####Entity related functions
+###Entity related functions
 
 
 ####_form_for_
+Returns the HTML for the opening tag of the form element.
 
-The following entity html helpers receive the entity as the first parameter, the name of the property as the second one, an optional label value (it'll add a label element for that form element) and finally an array of html options (for setting id, class, html attributes, etc).
+**Paramters**
+1. $en: The entity we're working with.
+2. $http_action: (Optional, "create" by default). Rerefences the action that we'll be doing. It's a string that must match the name of the action you setup on the routing array.
+3. $html_attrs: (Optional) Contains all extra html options for the form.
 
 ####_text_field_
 Returns the HTML code for a text field. 
@@ -266,7 +270,7 @@ Returns the HTML code for an input field of type hidden.
 1. $en: The entity we're working with.
 2. $attr: The attribute that we're referencing.
 
-#####_select_field_
+####_select_field_
 
 Returns the HTML code for a select field and it's options.
 
@@ -305,7 +309,23 @@ Returns the HTML code for a checkbox. If the value of the attribute used is "1" 
 2. $attr: The attribute that we're referencing. If the value of this attriute equals the value of one of the options, that option will be auto-selected.
 3. $label: (Optional) If non-null, it'll add a label field surrounding the text field with the content we pass on this parameter.
 
+###Small example
 
+Lets show how we would do a simple for for creating a <code>User</code> type entity:
+
+```php
+<?=form_for($this->entity)?>
+  <?=text_field($this->entity, "username", "User name")?>
+  <?=email_field($this->entity, "email", "Email")?>
+  <?=date_field($this->entity, "birthdate", "Birthdate")?> 
+  <?=password_field($this->entity, "password", "Password")?>
+  <?=submit("Save User", array("class" => "btn btn-primary"))?>
+ <?=end_form_tag()?>
+```
+
+In that example, we also used the <code>submit</code> helper, which is that simple, and the <code>end_form_tag</code> helper, which should be used at the ned of the for, to print the closing tag.
+
+That form from the example could be used as a "New" form aswell as an "Edit" form.
 
 ###Generic helper functions
 
