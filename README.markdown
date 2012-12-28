@@ -245,15 +245,66 @@ There are two types of functions, the ones that require an entity and the generi
 
 The following entity html helpers receive the entity as the first parameter, the name of the property as the second one, an optional label value (it'll add a label element for that form element) and finally an array of html options (for setting id, class, html attributes, etc).
 
-+ text_field
-+ password_field
-+ hidden_field
++ _text_field_
+Returns the HTML code for a text field. 
+
+**Parameters**
+
+1. $en: The entity we're working with.
+2. $attr: The name of the etity's attribute.
+3. $label: (Optional) If non-null, it'll add a label field surrounding the text field with the content we pass on this parameter.
+4. $html_attr: (Optiona) Array containing other html attributes for the input field. In a key => value format (i.e: <code>array("id" => "my_id")</code>)
+
++ _password_field_
+Returns the HTML code for an input field of type password. For more infor refer to the <code>text_field</code> helper.
+
++ _hidden_field_
+Returns the HTML code for an input field of type hidden.
+
+**Parameters**
+
+1. $en: The entity we're working with.
+2. $attr: The attribute that we're referencing.
+
 + select_field
-+ time_field: This helper will create an input field (of type text) that has a timePicker associated with it.
-+ date_field: This helper will create an input field (of type text) that has a jQuery calendar associated with it.
-+ file_field 
-+ boolean_field
-+ email_field
+
+Returns the HTML code for a select field and it's options.
+
+**Paramaters**
+
+1. $en: The entity we're working with.
+2. $attr: The attribute that we're referencing. If the value of this attriute equals the value of one of the options, that option will be auto-selected.
+3. $label: (Optional) If non-null, it'll add a label field surrounding the text field with the content we pass on this parameter.
+4. $options: (Optiona) Array containing other html attributes for the input field. In a key => value format (i.e: <code>array("id" => "my_id")</code>)
+
+
++ _time_field_ 
+Just like a text_field, but has a timePicker associated with it.
+
++ _date_field_
+
+Just like a text_field, but has a jQuery calendar associated with it.
+
++ _email_field_
+
+No difference with a text_field as of this writing.
+
++ _file_field_
+Returns the HTML code for an input field of type file.
+
+**Parameters**
+Refer to the parameters description of the <code>text_field</code> helper.
+
++ _boolean_field_
+
+Returns the HTML code for a checkbox. If the value of the attribute used is "1" it'll auto-check the checkbox.
+
+**Parameters**
+
+1. $en: The entity we're working with.
+2. $attr: The attribute that we're referencing. If the value of this attriute equals the value of one of the options, that option will be auto-selected.
+3. $label: (Optional) If non-null, it'll add a label field surrounding the text field with the content we pass on this parameter.
+
 
 
 ###Generic helper functions
