@@ -283,11 +283,16 @@ Here is how the helper functions are named:</p>
 
 <p>There are two types of functions, the ones that require an entity and the generic ones.</p>
 
-<h4>Entity related functions</h4>
+<h3>Entity related functions</h3>
 
 <h4><em>form_for</em></h4>
 
-<p>The following entity html helpers receive the entity as the first parameter, the name of the property as the second one, an optional label value (it'll add a label element for that form element) and finally an array of html options (for setting id, class, html attributes, etc).</p>
+<p>Returns the HTML for the opening tag of the form element.</p>
+
+<p><strong>Paramters</strong>
+1. $en: The entity we're working with.
+2. $http_action: (Optional, "create" by default). Rerefences the action that we'll be doing. It's a string that must match the name of the action you setup on the routing array.
+3. $html_attrs: (Optional) Contains all extra html options for the form.</p>
 
 <h4><em>text_field</em></h4>
 
@@ -313,7 +318,7 @@ Here is how the helper functions are named:</p>
 <ol>
 <li>$en: The entity we're working with.</li>
 <li>$attr: The attribute that we're referencing.</li>
-</ol><h5><em>select_field</em></h5>
+</ol><h4><em>select_field</em></h4>
 
 <p>Returns the HTML code for a select field and it's options.</p>
 
@@ -353,7 +358,24 @@ Refer to the parameters description of the <code>text_field</code> helper.</p>
 <li>$en: The entity we're working with.</li>
 <li>$attr: The attribute that we're referencing. If the value of this attriute equals the value of one of the options, that option will be auto-selected.</li>
 <li>$label: (Optional) If non-null, it'll add a label field surrounding the text field with the content we pass on this parameter.</li>
-</ol><h3>Generic helper functions</h3>
+</ol><h3>Small example</h3>
+
+<p>Lets show how we would do a simple for for creating a <code>User</code> type entity:</p>
+
+<div class="highlight"><pre><span class="o">&lt;?=</span><span class="nx">form_for</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">entity</span><span class="p">)</span><span class="cp">?&gt;</span><span class="x"></span>
+<span class="x">  </span><span class="cp">&lt;?</span><span class="o">=</span><span class="nx">text_field</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">entity</span><span class="p">,</span> <span class="s2">"username"</span><span class="p">,</span> <span class="s2">"User name"</span><span class="p">)</span><span class="cp">?&gt;</span><span class="x"></span>
+<span class="x">  </span><span class="cp">&lt;?</span><span class="o">=</span><span class="nx">email_field</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">entity</span><span class="p">,</span> <span class="s2">"email"</span><span class="p">,</span> <span class="s2">"Email"</span><span class="p">)</span><span class="cp">?&gt;</span><span class="x"></span>
+<span class="x">  </span><span class="cp">&lt;?</span><span class="o">=</span><span class="nx">date_field</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">entity</span><span class="p">,</span> <span class="s2">"birthdate"</span><span class="p">,</span> <span class="s2">"Birthdate"</span><span class="p">)</span><span class="cp">?&gt;</span><span class="x"> </span>
+<span class="x">  </span><span class="cp">&lt;?</span><span class="o">=</span><span class="nx">password_field</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">entity</span><span class="p">,</span> <span class="s2">"password"</span><span class="p">,</span> <span class="s2">"Password"</span><span class="p">)</span><span class="cp">?&gt;</span><span class="x"></span>
+<span class="x">  </span><span class="cp">&lt;?</span><span class="o">=</span><span class="nx">submit</span><span class="p">(</span><span class="s2">"Save User"</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s2">"class"</span> <span class="o">=&gt;</span> <span class="s2">"btn btn-primary"</span><span class="p">))</span><span class="cp">?&gt;</span><span class="x"></span>
+<span class="x"> </span><span class="cp">&lt;?</span><span class="o">=</span><span class="nx">end_form_tag</span><span class="p">()</span><span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+
+<p>In that example, we also used the <code>submit</code> helper, which is that simple, and the <code>end_form_tag</code> helper, which should be used at the ned of the for, to print the closing tag.</p>
+
+<p>That form from the example could be used as a "New" form aswell as an "Edit" form.</p>
+
+<h3>Generic helper functions</h3>
 
 <ul>
 <li>form_for_tag</li>
