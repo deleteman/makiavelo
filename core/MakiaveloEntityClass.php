@@ -12,6 +12,8 @@ class MakiaveloEntity {
 		return ($this->id == null);
 	}
 
+	//Gets the table description, in order to understand the types of each field and stores it
+	//on the session, in order to cache the information
 	private function getTableDescription() {
 		$tname = $this->__get_entity_name();
 		if(!isset($_SESSION['makiavelo']['t_descriptions'][$tname])) {
@@ -32,6 +34,8 @@ class MakiaveloEntity {
 			} else {
 				return $val;
 			}
+		} elseif(strstr($type, "float")) {
+			return str_replace(",", ".", $val);
 		} else {
 			return $val;
 		}
