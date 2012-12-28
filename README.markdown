@@ -241,11 +241,11 @@ There are two types of functions, the ones that require an entity and the generi
 ####Entity related functions
 
 
-+ form_for
+####_form_for_
 
 The following entity html helpers receive the entity as the first parameter, the name of the property as the second one, an optional label value (it'll add a label element for that form element) and finally an array of html options (for setting id, class, html attributes, etc).
 
-+ _text_field_
+####_text_field_
 Returns the HTML code for a text field. 
 
 **Parameters**
@@ -255,10 +255,10 @@ Returns the HTML code for a text field.
 3. $label: (Optional) If non-null, it'll add a label field surrounding the text field with the content we pass on this parameter.
 4. $html_attr: (Optiona) Array containing other html attributes for the input field. In a key => value format (i.e: <code>array("id" => "my_id")</code>)
 
-+ _password_field_
+####_password_field_
 Returns the HTML code for an input field of type password. For more infor refer to the <code>text_field</code> helper.
 
-+ _hidden_field_
+####_hidden_field_
 Returns the HTML code for an input field of type hidden.
 
 **Parameters**
@@ -266,7 +266,7 @@ Returns the HTML code for an input field of type hidden.
 1. $en: The entity we're working with.
 2. $attr: The attribute that we're referencing.
 
-+ select_field
+#####_select_field_
 
 Returns the HTML code for a select field and it's options.
 
@@ -278,24 +278,24 @@ Returns the HTML code for a select field and it's options.
 4. $options: (Optiona) Array containing other html attributes for the input field. In a key => value format (i.e: <code>array("id" => "my_id")</code>)
 
 
-+ _time_field_ 
+####_time_field_ 
 Just like a text_field, but has a timePicker associated with it.
 
-+ _date_field_
+####_date_field_
 
 Just like a text_field, but has a jQuery calendar associated with it.
 
-+ _email_field_
+####_email_field_
 
 No difference with a text_field as of this writing.
 
-+ _file_field_
+####_file_field_
 Returns the HTML code for an input field of type file.
 
 **Parameters**
 Refer to the parameters description of the <code>text_field</code> helper.
 
-+ _boolean_field_
+####_boolean_field_
 
 Returns the HTML code for a checkbox. If the value of the attribute used is "1" it'll auto-check the checkbox.
 
