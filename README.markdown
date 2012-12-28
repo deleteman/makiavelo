@@ -485,3 +485,4 @@ Some of the areas that need mayor work are:
 
 #Contribute
 Please, feel free to  fork, improve and create a pull request! All contributions are welcomed! :)
+Also, if you want to get in touch with me, you can send e-mails to: deleteman[at]gmail[dot]com
