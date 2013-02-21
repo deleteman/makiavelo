@@ -93,7 +93,7 @@ The framework will then take the following actions:
 
 _That's right!_ Makiavelo just did all that for you!
 
-The next logical step would be to load the SQL file into the database, and ideally, Makiavelo would provide a way to do that for you, but right now, that's not implemented, so you'll have to do something like this: `mysql -u[username] -p -h[yourhost] [yourdatabase] < app/sql/creates/user.yml`
+The next logical step would be to load the SQL file into the database, and ideally, Makiavelo would provide a way to do that for you, but right now, that's not implemented, so you'll have to do something like this: `mysql -u[username] -p -h[yourhost] [yourdatabase] < app/sql/creates/user.sql
 This will go away soon, promiss!!
 
 After loading the SQL into your database, you're ready to start creating new users, cool uh!? Just go to the url created for you, and you'll see what I mean (i.e: yourhost.com/user/new will take you to the new user form).
@@ -238,23 +238,94 @@ Makiavelo provides some basic html helper functions to ease the development proc
 
 There are two types of functions, the ones that require an entity and the generic ones.
 
-####Entity related functions
+###Entity related functions
 
 
-+ form_for
+####_form_for_
+Returns the HTML for the opening tag of the form element.
 
-The following entity html helpers receive the entity as the first parameter, the name of the property as the second one, an optional label value (it'll add a label element for that form element) and finally an array of html options (for setting id, class, html attributes, etc).
+**Paramters**
+1. $en: The entity we're working with.
+2. $http_action: (Optional, "create" by default). Rerefences the action that we'll be doing. It's a string that must match the name of the action you setup on the routing array.
+3. $html_attrs: (Optional) Contains all extra html options for the form.
 
-+ text_field
-+ password_field
-+ hidden_field
-+ select_field
-+ time_field: This helper will create an input field (of type text) that has a timePicker associated with it.
-+ date_field: This helper will create an input field (of type text) that has a jQuery calendar associated with it.
-+ file_field 
-+ boolean_field
-+ email_field
+####_text_field_
+Returns the HTML code for a text field. 
 
+**Parameters**
+
+1. $en: The entity we're working with.
+2. $attr: The name of the etity's attribute.
+3. $label: (Optional) If non-null, it'll add a label field surrounding the text field with the content we pass on this parameter.
+4. $html_attr: (Optiona) Array containing other html attributes for the input field. In a key => value format (i.e: <code>array("id" => "my_id")</code>)
+
+####_password_field_
+Returns the HTML code for an input field of type password. For more infor refer to the <code>text_field</code> helper.
+
+####_hidden_field_
+Returns the HTML code for an input field of type hidden.
+
+**Parameters**
+
+1. $en: The entity we're working with.
+2. $attr: The attribute that we're referencing.
+
+####_select_field_
+
+Returns the HTML code for a select field and it's options.
+
+**Paramaters**
+
+1. $en: The entity we're working with.
+2. $attr: The attribute that we're referencing. If the value of this attriute equals the value of one of the options, that option will be auto-selected.
+3. $label: (Optional) If non-null, it'll add a label field surrounding the text field with the content we pass on this parameter.
+4. $options: (Optiona) Array containing other html attributes for the input field. In a key => value format (i.e: <code>array("id" => "my_id")</code>)
+
+
+####_time_field_ 
+Just like a text_field, but has a timePicker associated with it.
+
+####_date_field_
+
+Just like a text_field, but has a jQuery calendar associated with it.
+
+####_email_field_
+
+No difference with a text_field as of this writing.
+
+####_file_field_
+Returns the HTML code for an input field of type file.
+
+**Parameters**
+Refer to the parameters description of the <code>text_field</code> helper.
+
+####_boolean_field_
+
+Returns the HTML code for a checkbox. If the value of the attribute used is "1" it'll auto-check the checkbox.
+
+**Parameters**
+
+1. $en: The entity we're working with.
+2. $attr: The attribute that we're referencing. If the value of this attriute equals the value of one of the options, that option will be auto-selected.
+3. $label: (Optional) If non-null, it'll add a label field surrounding the text field with the content we pass on this parameter.
+
+###Small example
+
+Lets show how we would do a simple for for creating a <code>User</code> type entity:
+
+```php
+<?=form_for($this->entity)?>
+  <?=text_field($this->entity, "username", "User name")?>
+  <?=email_field($this->entity, "email", "Email")?>
+  <?=date_field($this->entity, "birthdate", "Birthdate")?> 
+  <?=password_field($this->entity, "password", "Password")?>
+  <?=submit("Save User", array("class" => "btn btn-primary"))?>
+ <?=end_form_tag()?>
+```
+
+In that example, we also used the <code>submit</code> helper, which is that simple, and the <code>end_form_tag</code> helper, which should be used at the ned of the for, to print the closing tag.
+
+That form from the example could be used as a "New" form aswell as an "Edit" form.
 
 ###Generic helper functions
 
@@ -434,3 +505,4 @@ Some of the areas that need mayor work are:
 
 #Contribute
 Please, feel free to  fork, improve and create a pull request! All contributions are welcomed! :)
+Also, if you want to get in touch with me, you can send e-mails to: deleteman[at]gmail[dot]com

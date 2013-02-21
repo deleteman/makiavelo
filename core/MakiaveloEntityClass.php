@@ -100,5 +100,4 @@ class MakiaveloEntity {
 		return $this->$name;
 	}
 }
-
 ?>
