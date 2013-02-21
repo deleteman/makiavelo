@@ -66,8 +66,10 @@ if(count($parameters) > 1) {
 	echo "\n     Attributes:";
 	echo "\n     crud: Generates a controller, an entity and a set of views for the CRUD operations. Needs a name for the entity";
 	echo "\n     controller: Generates an empty controller. Needs a controller name as parameter";
+	echo "\n     migration: Generates an empty migration class.";
 	echo "\n  db:create: Creates the database.";
 	echo "\n  db:load: Loads all sql files related to the entities";
+	echo "\n  db:migrate: Runs all pending migrations";
 	echo "\n  task: Runs a task on lib/tasks";
 	echo "\n";
 	//[yaml file inside mappings folder]

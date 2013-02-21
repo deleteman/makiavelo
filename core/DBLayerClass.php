@@ -76,6 +76,9 @@ class DBLayer {
 	public static function query($sql) {
 		$db = DBLayer::connect();
 		$return = mysql_query($sql, $db);
+		if(!$return) {
+			Makiavelo::info("Error on MYSQL Query:: " . mysql_error());
+		}
 		return $return;
 	}
 

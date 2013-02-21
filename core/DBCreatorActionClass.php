@@ -14,7 +14,8 @@ class DBCreatorAction extends Action {
 			Makiavelo::info("ERROR creating db: " . mysql_error());
 		}
 		//We also have to create the migrations table
-		$sql_migrations = "CREATE TABLE {$db_name}.migrations ( migration INT PRIMARY KEY);"
+		$sql_migrations = "CREATE TABLE migrations ( migration INT PRIMARY KEY);";
+		mysql_select_db($db_name);
 		if(!mysql_query($sql_migrations, $conn)) {
 			Makiavelo::info("ERROR creating migrations table:: " . mysql_error());
 		}

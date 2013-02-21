@@ -16,6 +16,7 @@ class ActionFactory {
 		"db:load" => "DBLoaderAction",
 		"db:create" => "DBCreatorAction",
 		"db:migrate" => "DBMigratorAction",
+		"db:rollback" => "DBMigratorRollbackAction",
 		"task" => "TaskRunnerAction"
 		);
 

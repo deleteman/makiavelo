@@ -9,9 +9,18 @@ class MigrationGenerator {
 
 		$migration_fname = $timestamp."_".$filename.".php";
 		Makiavelo::puts("Generating migration file...$migration_fname\n");
-		$fp = @fopen(ROOT_PATH . "/" .Makiavelo::MIGRATIONS_FOLDER . "/" . $migration_fname, "w");
+		$migration_folder = ROOT_PATH . "/" .Makiavelo::MIGRATIONS_FOLDER;
+		if(!is_dir($migration_folder))  {
+			Makiavelo::puts("Migrations folder not found, creating it...");
+			mkdir($migration_folder);
+		}
+		$fp = @fopen( $migration_folder . "/" . $migration_fname, "w");
 		if($fp) {
-			fwrite($fp, "<?php \n //Write here your migration code...\n ?>");
+			$class_name = Makiavelo::underscore_to_camel($migration_name);
+			fwrite($fp, "<?php \n class $class_name extends Migration {
+			   public function up() {}  \n
+			   public function down() {} \n
+			}  \n?>");
 			fclose($fp);
 		}
 	}
