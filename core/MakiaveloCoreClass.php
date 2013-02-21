@@ -48,10 +48,25 @@ class MakiaveloCore {
 			$ret = array();
 			$params = $url[1];
 			$params = explode("&", $params);
+			Makiavelo::info("Query params total::" . print_r($params, true));
 			foreach($params as $value_key) {
 				$parts = explode("=", $value_key);
-				$ret[$parts[0]] = $parts[1];
+				$key = urldecode($parts[0]);
+				Makiavelo::info("query param: " . print_r($parts, true));
+				if(strpos($key, "[") !== false) {
+					$new_key = substr($key,0, strpos($key, "["));
+					$second_key = substr($key,strpos($key, "[") + 1, strpos($key, "]") - 1);
+					$second_key = str_replace("[", "", $second_key);
+					$second_key = str_replace("]", "", $second_key);
+					if(!isset($ret[$new_key]) || !is_array($ret[$new_key])) {
+						$ret[$new_key] = array();
+					}
+					$ret[$new_key][$second_key] = $parts[1];
+				} else {
+					$ret[$parts[0]] = $parts[1];
+				}
 			}
+			Makiavelo::info("returning::" . print_r($ret, true));
 			return $ret;
 		}
 	}

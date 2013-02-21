@@ -15,6 +15,7 @@ class ActionFactory {
 		"g" => "GeneratorAction",
 		"db:load" => "DBLoaderAction",
 		"db:create" => "DBCreatorAction",
+		"db:migrate" => "DBMigratorAction",
 		"task" => "TaskRunnerAction"
 		);
 

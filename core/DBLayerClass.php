@@ -67,6 +67,18 @@ class DBLayer {
 		DBLayer::$config = $config[Makiavelo::getCurrentEnv()];
 	}
 
+	public static function select($sql) {
+		$db = DBLayer::connect();
+		$return = mysql_query($sql, $db);
+		return $return;
+	}
+
+	public static function query($sql) {
+		$db = DBLayer::connect();
+		$return = mysql_query($sql, $db);
+		return $return;
+	}
+
 }
 
 

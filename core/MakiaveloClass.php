@@ -17,6 +17,8 @@ class Makiavelo {
 
 	const DATABASE_CONFIGURATION = "/config/database.yml";
 
+	const MIGRATIONS_FOLDER = "/lib/migrations";
+
 	const TEMPLATES_FOLDER =  "/core/templates/";
 	const ABM_VIEWS_TEMPLATE_FOLDER = "/core/templates/abm_views/";
 	const CONTROLLER_TEMPLATE_FILE = "/core/templates/ControllerTemplateClass.php";

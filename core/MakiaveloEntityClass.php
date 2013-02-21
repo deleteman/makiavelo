@@ -2,6 +2,7 @@
 
 class MakiaveloEntity {
 	protected $errors;
+	protected static $validations;
 
 
 	public function __get_entity_name() {
@@ -24,14 +25,16 @@ class MakiaveloEntity {
 	private function translateValue($attr, $val) {
 		$data = $this->getTableDescription();
 		$type = $data[$attr];
-		//Makiavelo::info("Looking for a translation for " . print_r($data, true));
-		Makiavelo::info("Attr: $attr - Value: " . $val);
+
+		//Makiavelo::info("Attr: $attr - Value: " . $val);
 		if(strstr($type, "tinyint")) {
 			if(strtolower($val) == "on") {
 				return 1;
 			} else {
 				return $val;
 			}
+		} elseif(strstr($type, "float")) {
+			return str_replace(",",".",$val);
 		} else {
 			return $val;
 		}
@@ -47,6 +50,13 @@ class MakiaveloEntity {
 		}
 	}
 
+
+
+	public function validations() {
+		return self::$validations;
+	}
+
+
 	public function validate() {
 		Makiavelo::info("== Validating model ==");
 
@@ -60,13 +70,14 @@ class MakiaveloEntity {
 		foreach($properties as $prop) {
 			$attr = $prop->getName();
 			$value = $this->$attr;
+			$validations = $tmp_entity->validations();
 			Makiavelo::info("-- Validating attr: " . $attr);
-			if(!isset($tmp_entity::$validations[$attr])) {
+			if(!isset($validations[$attr])) {
 				Makiavelo::info("-- No validation set");
 				continue;
 			}
 			$this->errors[$attr] = array();
-			foreach($tmp_entity::$validations[$attr] as $validator) {
+			foreach($validations[$attr] as $validator) {
 				Makiavelo::info("-- Validation: " . $validator);
 				$validator_class = ucwords($validator) . "Validator";
 				$v = new $validator_class;

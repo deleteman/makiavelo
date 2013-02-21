@@ -2,7 +2,8 @@
 class GeneratorAction extends Action {
 	private $action_mappings = array(
 		"crud" => "CRUDGenerator",
-		"controller" => "ControllerGenerator"
+		"controller" => "ControllerGenerator",
+		"migration" => "MigrationGenerator"
 		);
 
 	public function execute($params) {

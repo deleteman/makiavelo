@@ -43,7 +43,6 @@ class SecurityLayer {
 
 		$_SESSION['makiavelo']['current_session']['user'] = $usr;
 		$_SESSION['makiavelo']['current_session']['role'] = $usr->role;
-		Makiavelo::info("Loging in user: " . print_r($_SESSION, true));
 
 	}
 
@@ -56,7 +55,7 @@ class SecurityLayer {
 	public function isUserLoggedIn() {
 		if(isset($_SESSION['makiavelo'])) {
 			if(isset($_SESSION['makiavelo']['current_session'])) {
-				if(isset($_SESSION['makiavelo']['current_session']['user'])) {
+				if(isset($_SESSION['makiavelo']['current_session']['role'])) {
 					return true;
 				}
 			}

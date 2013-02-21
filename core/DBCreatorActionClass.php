@@ -10,11 +10,13 @@ class DBCreatorAction extends Action {
 		$conn = DBLayer::connect();
 		$db_name = DBLayer::getDBName();
 		$sql = "CREATE DATABASE `$db_name`";
-		Makiavelo::puts($sql);
-		Makiavelo::info("SQL to execute:");
-		Makiavelo::info($sql . "\n");
 		if(!mysql_query($sql, $conn)) {
 			Makiavelo::info("ERROR creating db: " . mysql_error());
+		}
+		//We also have to create the migrations table
+		$sql_migrations = "CREATE TABLE {$db_name}.migrations ( migration INT PRIMARY KEY);"
+		if(!mysql_query($sql_migrations, $conn)) {
+			Makiavelo::info("ERROR creating migrations table:: " . mysql_error());
 		}
 		DBLayer::disconnect($conn);
 	}

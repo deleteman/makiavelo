@@ -16,7 +16,7 @@ class I18n {
 
 	static private $locale = "en"; //by default we use "en"
 	const LOCALES_FOLDER = "/config/locales/";
-	static private $date_format = "d/m/Y - H:i";
+	static private $date_format = "d/m/Y";
 
 
 	static public function config($options) {
@@ -74,8 +74,13 @@ class I18n {
 	}
 
 	static public function localize($datetime) {
+		Makiavelo::info("---------------------------------------");
+		Makiavelo::info("Localizing the following date: $datetime");
 		$dtime = new DateTime($datetime);
-		return $dtime->format(I18n::$date_format);
+		$res = $dtime->format(I18n::$date_format);
+		Makiavelo::info("Result:: $res");
+		Makiavelo::info("---------------------------------------");
+		return $res;
 		/*
 		if(trim($datetime) == "") {
 			return;

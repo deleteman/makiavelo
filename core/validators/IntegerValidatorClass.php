@@ -3,7 +3,8 @@
 class IntegerValidator extends Validator {
 
 	public function validate($val) {
-		if(is_numeric($val)) {
+		Makiavelo::info("Validating if '$val' is numeric...");
+		if(!is_numeric($val)) {
 			if(class_exists("I18n")) {
 				$err_msg = I18n::t("makiavelo.entities.errors.integer");
 			} else {
