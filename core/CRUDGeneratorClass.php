@@ -16,7 +16,7 @@ class CRUDGenerator {
 			print_r($yaml_configuration);
 			if(!isset($yaml_configuration['crud'])) {
 				Makiavelo::info("**** ERROR ****");
-				Makiavelo::info("ABM key not found on yaml file, cancelling generation...");
+				Makiavelo::info("CRUD key not found on yaml file, cancelling generation...");
 			} else {
 				$crud_info = $yaml_configuration['crud'];
 				$this->en_name = $crud_info['entity']['name'];

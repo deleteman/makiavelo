@@ -60,7 +60,7 @@ function file_field($en, $attr,$label, $html_attrs = array()) {
 }
 
 
-function select_field_tag($name, $id, $options) {
+function select_field_tag($name, $id, $options, $html_attrs = array()) {
 	$elems = $options['options'];
 	$value_field = (isset($options['value_field'])) ? $options['value_field'] : "";
 	$text_field = (isset($options['text_field'])) ? $options['text_field'] : "";
@@ -68,14 +68,20 @@ function select_field_tag($name, $id, $options) {
 
 
 	$html = "";
-	if(isset($html['no-container']) && !$html['no-container'] || !isset($html['no-container'])) {
+	if(isset($html_attrs['no-container']) && !$html_attrs['no-container'] || !isset($html_attrs['no-container'])) {
 		$html = '<div class="form-field ">';
+	}
+
+	$html_extra_attrs = "";
+	foreach($html_attrs as $attr => $value) {
+		$html_extra_attrs .= ' '.$attr.'="'.$value.'"';
 	}
 
 	$html .= '<select 
 				name="' . $name .'" 
 				id="' . $id .'" 
-				>';
+				'.$html_extra_attrs.' 
+				 >';
 	foreach($elems as $elem) {
 		$value = is_array($elem) ? $elem[0] : $elem->$value_field;
 		$text  = is_array($elem) ? $elem[1] : $elem->$text_field;
@@ -84,7 +90,7 @@ function select_field_tag($name, $id, $options) {
 		$html .= '<option value="' . $value . '" ' . $selected . '>' . $text . '</option>';
 	}
 	$html .= "</select>";
-	if(isset($html['no-container']) && !$html['no-container'] || !isset($html['no-container'])) {
+	if(isset($html_attrs['no-container']) && !$html_attrs['no-container'] || !isset($html_attrs['no-container'])) {
 		$html .= "</div>";
 	}
 
@@ -142,8 +148,8 @@ function boolean_field($en, $attr, $label = null) {
 	return $html;
 }
 
-function email_field($en, $attr, $label = null) {
-	return text_field($en, $attr, $label);
+function email_field($en, $attr, $label = null, $attrs = array()) {
+	return text_field($en, $attr, $label, $attrs);
 }
 
 function text_field($en, $attr, $label = null, $html_attr = array()) {
@@ -155,11 +161,17 @@ function text_field($en, $attr, $label = null, $html_attr = array()) {
 			$html_opts .= $prop. '="' . $val . '" ';
 		}
 	}
+	$html = "";
 	$error = (isset($en->errors[$attr])) ? "validation-error" : "";
-	$html = '<div class="form-field '.$error.'">';
-	$label_text = $label;
-	if($label == null) {
-		$label_text = Makiavelo::titlelize($attr);
+	if(!isset($html_attr["no-container"])) {
+		$html = '<div class="form-field '.$error.'">';
+	}
+	$label_text = "";
+	if($label !== false) {
+		$label_text = $label;
+		if($label === null) {
+			$label_text = Makiavelo::titlelize($attr);
+		}
 	}
 	$html .= '<label for="'.$attr.'">'.$label_text.'</label>';
 	$html .= '<input type="text" 
@@ -167,13 +179,16 @@ function text_field($en, $attr, $label = null, $html_attr = array()) {
 				id="' . $en->__get_entity_name() . '_' .$attr.'" 
 				value="' . $en->$attr . '" 
 				'.$html_opts.' />';
-	$html .= "</div>";
+	if(!isset($html_attr["no-container"])) {
+		$html .= "</div>";
+	}
+
 
 	return $html;
 }
 
 
-function text_field_tag($name, $id, $html = array()) {
+function text_field_tag($name, $id, $label = null, $html = array()) {
 	$html_opts = "";
 	if(count($html) > 0) {
 		foreach($html as $attr => $val) {
@@ -185,6 +200,9 @@ function text_field_tag($name, $id, $html = array()) {
 	if(isset($html['no-container']) && !$html['no-container'] || !isset($html['no-container'])) {
 		$html_code = '<div class="form-field">';
 	} 	
+	if($label !== null) {
+		$html_code .= '<label for="'.$id.'">' . $label.'</label>';
+	}
 	$html_code .= '<input type="text" 
 				name="' . $name . '"
 				id="' . $id . '"
@@ -223,14 +241,14 @@ function password_field_tag($name, $id, $html = array()) {
 		}
 	}
 	$html_code = "";
-	if(!$html['no-container']) {
+	if(!isset($html['no-container'])) {
 		$html_code = '<div class="form-field">';
 	} 
 	$html_code .= '<input type="password" 
 				name="' . $name . '"
 				id="' . $id . '"
 				'.$html_opts. ' />';
-	if(!$html['no-container']) {
+	if(!isset($html['no-container'])) {
 		$html_code .= "</div>";
 	}
 

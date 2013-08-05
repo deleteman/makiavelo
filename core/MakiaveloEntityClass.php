@@ -41,12 +41,10 @@ class MakiaveloEntity {
 	}
 
 	public function load_from_array($arr) {
-		Makiavelo::info("Inside load_from_array....");
-		Makiavelo::info("Data to be loaded: " . print_r($arr, true));
+		//Makiavelo::info("Inside load_from_array....");
+		//Makiavelo::info("Data to be loaded: " . print_r($arr, true));
 		foreach($arr as $attr => $value) {
-			Makiavelo::info("Setting {$attr} to {$value}");
 			$this->$attr = $this->translateValue($attr, $value);
-			Makiavelo::info("getting {$attr} to {$this->$attr}");
 		}
 	}
 
@@ -58,7 +56,7 @@ class MakiaveloEntity {
 
 
 	public function validate() {
-		Makiavelo::info("== Validating model ==");
+		//Makiavelo::info("== Validating model ==");
 
 		$class_name = get_class($this);
 		$tmp_entity = new $class_name;
@@ -67,18 +65,27 @@ class MakiaveloEntity {
 		$properties = $reflect->getProperties();
 		$validates = true;
 
+		try {
+			$validations = $reflect->getStaticPropertyValue("validations");
+		} catch(Exception $e) {
+			$props = $reflect->getStaticProperties();
+			$validations = $props['validations'];
+		}
+
 		foreach($properties as $prop) {
 			$attr = $prop->getName();
 			$value = $this->$attr;
-			$validations = $tmp_entity->validations();
-			Makiavelo::info("-- Validating attr: " . $attr);
+			//$validations = $class_name::$validations; //This sucks, TODO: Fix so it works on php < 5.3 and php >= 5.3
+			//Makiavelo::info("Validations set for model (" . $class_name .") " . print_r($validations, true));
+
+			//Makiavelo::info("-- Validating attr: " . $attr);
 			if(!isset($validations[$attr])) {
-				Makiavelo::info("-- No validation set");
+				//Makiavelo::info("-- No validation set");
 				continue;
 			}
 			$this->errors[$attr] = array();
 			foreach($validations[$attr] as $validator) {
-				Makiavelo::info("-- Validation: " . $validator);
+				//Makiavelo::info("-- Validation: " . $validator);
 				$validator_class = ucwords($validator) . "Validator";
 				$v = new $validator_class;
 				if(!$v->validate($value)) {
@@ -87,8 +94,8 @@ class MakiaveloEntity {
 				}
 			}
 		}
-		Makiavelo::info("== Validation result == ");
-		Makiavelo::info(print_r($this->errors, true));
+		//Makiavelo::info("== Validation result == ");
+		//Makiavelo::info(print_r($this->errors, true));
 		return $validates;
 	}
 	
