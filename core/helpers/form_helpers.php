@@ -39,8 +39,8 @@ function form_end_tag() {
 function file_field($en, $attr,$label, $html_attrs = array()) {
 	$html_opts = "";
 	if(count($html_attrs) > 0) {
-		foreach($html_attrs as $attr => $val) {
-			$html_opts .= $attr . '="' . $val . '" ';
+		foreach($html_attrs as $attr_name => $val) {
+			$html_opts .= $attr_name . '="' . $val . '" ';
 		}
 	}
 	$error = (isset($en->errors[$attr])) ? "validation-error" : "";
@@ -215,7 +215,14 @@ function text_field_tag($name, $id, $label = null, $html = array()) {
 }
 
 
-function password_field($en, $attr, $label = null) {
+function password_field($en, $attr, $label = null, $html_attrs = array()) {
+	$html_opts = "";
+	if(count($html_attrs) > 0) {
+		foreach($html_attrs as $idx_attr => $val) {
+			$html_opts .= $idx_attr . '="' . $val . '" ';
+		}
+	}
+
 
 	$error = (isset($en->errors[$attr])) ? "validation-error" : "";
 	$html = '<div class="form-field '.$error.'">';
@@ -223,11 +230,12 @@ function password_field($en, $attr, $label = null) {
 	if($label == null) {
 		$label_text = Makiavelo::titlelize($attr);
 	}
-	$html .= '<label for="'.$attr.'">'.$label_text.'</label>';
+	$html .= '<label for="'.$en->__get_entity_name() . '_' . $attr .'">'.$label_text.'</label>';
 	$html .= '<input type="password" 
-				name="' . $en->__get_entity_name() . '['.$attr.']" 
-				id="' . $en->__get_entity_name() . '_' .$attr.'" 
-				value="' . $en->$attr . '" />';
+              name="' . $en->__get_entity_name() . '['.$attr.']" 
+              id="' . $en->__get_entity_name() . '_' .$attr.'" 
+              value="' . $en->$attr . '" 
+              '.$html_opts.' />';
 	$html .= "</div>";
 
 	return $html;
@@ -347,7 +355,12 @@ function date_field_tag($name, $id, $label = null, $html_attrs = array()) {
 	return $html;
 }
 
-function date_field($en, $attr, $label = null) {
+function date_field($en, $attr, $label = null, $html = array()) {
+	$html_opts = "";
+  $html['class'] .= " date-field";
+  foreach($html as $htmlattr => $val) {
+    $html_opts .= $htmlattr . '="' . $val . '" ';
+  }
 
 	$error = (isset($en->errors[$attr])) ? "validation-error" : "";
 	$html = '<div class="form-field '.$error.'">';
@@ -357,7 +370,7 @@ function date_field($en, $attr, $label = null) {
 	}
 	$html .= '<label for="'.$attr.'">'.$label_text.'</label>';
 	$html .= '<input type="text"
-				class="date-field"
+        ' . $html_opts .' 
 				name="' . $en->__get_entity_name() . '['.$attr.']" 
 				id="' . $en->__get_entity_name() . '_' .$attr.'" 
 				value="' . $en->$attr . '" />';
@@ -396,7 +409,7 @@ function link_to($url, $text, $html_code = "") {
 	}
 
 	if($rHandler->find_method_for($url) == Makiavelo::VIA_POST) {
-		$html = form_tag($url, "post");
+		$html = form_tag($url, "post", array("class" => "_delete-form"));
 		$html .= '<a href="#" type="submit" '.$html_attrs.'>'.$text.'</a>';
 		$html .= form_end_tag();
 	} else {

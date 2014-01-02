@@ -30,6 +30,7 @@ class Makiavelo {
 
 	const DEBUG_LEVEL_NONE = 0;
 	const DEBUG_LEVEL_INFO = 1;
+	const DEBUG_LEVEL_ERROR = 2;
 	const DEBUG_LEVEL_FULL = 99;
 
 	const RESPONSE_CODE_OK = "200";
@@ -48,7 +49,9 @@ class Makiavelo {
 	public static function info($txt) {
 		self::debug($txt, Makiavelo::DEBUG_LEVEL_INFO);
 	}
-
+  public static function error($txt) {
+		self::debug($txt, Makiavelo::DEBUG_LEVEL_ERROR);
+	}
 	public static function puts($txt) {
 		echo "\n" . $txt;
 	}

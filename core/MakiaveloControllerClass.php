@@ -35,7 +35,7 @@ class MakiaveloController {
 	protected $request;
 	protected $flash;
 	private $action;
-
+  public $statusCode;
 
 
 
@@ -46,13 +46,16 @@ class MakiaveloController {
 	}
 
 	public function handleRequest($get, $post, $named) {
+    $this->statusCode = Makiavelo::RESPONSE_CODE_OK;
 
 		Makiavelo::info("Handling uploading files...");
 		foreach($_FILES as $field_name => $data) {
 			foreach($data['tmp_name'] as $fname => $tmp_name) {
 				Makiavelo::info("-- File (" . $field_name . ") : " . ROOT_PATH . Makiavelo::UPLOADED_FILES_FOLDER . "/" . $data['name'][$fname]);
 				$res = move_uploaded_file($tmp_name, ROOT_PATH . Makiavelo::UPLOADED_FILES_FOLDER . "/" . $data['name'][$fname]);
-				$post[$field_name][$fname . "_path"] =  str_replace("/public", "", Makiavelo::UPLOADED_FILES_FOLDER . "/" . $data['name'][$fname]);
+        if($data['name'][$fname]) {
+				  $post[$field_name][$fname . "_path"] =  str_replace("/public", "", Makiavelo::UPLOADED_FILES_FOLDER . "/" . $data['name'][$fname]);
+        }
 			}
 		}
 
@@ -99,6 +102,10 @@ class MakiaveloController {
 		foreach($params as $variable => $value) {
 			$this->$variable = $value;
 		}
+
+    if($this->statusCode == Makiavelo::RESPONSE_CODE_NOT_FOUND) {
+      header("HTTP/1.0 404 not found");
+    }
 		require_once($path_layout);
 	}
 }

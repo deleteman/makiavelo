@@ -10,6 +10,7 @@ class ViewsGenerator {
 		"date" => "date",
 		"time" => "time",
 		"text" => "textarea",
+    "blob" => "file",
 		"float" => "text"
 		);
 

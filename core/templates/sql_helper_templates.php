@@ -17,7 +17,8 @@ function save_[UC_NAME]($entity) {
 			foreach($matches[1] as $attr) {
 				$sql = str_replace(":$attr:", $entity->$attr, $sql);
 			}
-			mysql_query($sql, $__db_conn);
+			$rs = mysql_query($sql, $__db_conn);
+      if(!$rs) { Makiavelo::error("Mysql Error:: " . mysql_error() . "::" . $sql); }
 			$entity->id = mysql_insert_id($__db_conn);
 			return true;
 		} else {
@@ -41,7 +42,11 @@ function update_[UC_NAME]($en) {
 		foreach($matches[1] as $attr) {
 			$sql = str_replace(":$attr:", $en->$attr, $sql);
 		}
-		mysql_query($sql, $__db_conn);
+		$rs = mysql_query($sql, $__db_conn);
+    if(!$rs) { 
+      Makiavelo::error("Mysql Error:: " . mysql_error() . "::" . $sql); 
+      return false;
+    }
 		return true;
 	} else {
 		return false;
@@ -55,7 +60,7 @@ function delete_[UC_NAME]($entity_id) {
 	$sql = str_replace(":id:", $entity_id, "[DELETE_SQL]"); #DELETE FROM tipo_buque WHERE id = " . $entity_id;
 
 	if(!mysql_query($sql, $__db_conn)) {
-		echo mysql_error();
+    Makiavelo::error("Mysql Error:: " . mysql_error() . "::" . $sql); 
 	}
 }
 

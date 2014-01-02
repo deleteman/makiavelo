@@ -10,6 +10,7 @@ class SQLGenerator {
 										"datetime" => "datetime",
 										"time" => "time", 
 										"date" => "date",
+                    "blob" => "blob", 
 										"float" => "float");
 
 	public function __construct($name, $attrs) {
