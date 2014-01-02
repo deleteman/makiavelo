@@ -18,7 +18,7 @@ In order to help with the development speed, the framework comes bundled with th
 + jQuery 1.8.2
 + jQueryUI 1.8.23
 + jQuery.timePicker
-+ Bootstrap
++ Bootstrap 3
 
 ##Folder structure
 
