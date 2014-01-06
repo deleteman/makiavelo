@@ -101,6 +101,7 @@ function select_field($en, $attr, $label, $options) {
 	$elems = $options['options'];
 	$value_field = (isset($options['value_field'])) ? $options['value_field'] : "";
 	$text_field = (isset($options['text_field'])) ? $options['text_field'] : "";
+  $css_class = $options['class'];
 
 	$error = (isset($en->errors[$attr]) ) ? "validation-error" : "";
 	$html = '<div class="form-field '.$error.'">';
@@ -112,6 +113,7 @@ function select_field($en, $attr, $label, $options) {
 	$html .= '<select 
 				name="' . $en->__get_entity_name() . '['.$attr.']" 
 				id="' . $en->__get_entity_name() . '_' .$attr.'" 
+        class="'. $css_class .'" 
 				>';
 	foreach($elems as $elem) {
 		$selected = "";
