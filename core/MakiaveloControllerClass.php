@@ -30,9 +30,38 @@ class HTTPRequest {
 	}
 }
 
+class HTTPResponse {
+  public $contentType;
+  public $responseCode;
+
+  public function responseCodeHeader() {
+    if(!$this->responseCode) {
+      header("HTTP/1.0 200 Ok");
+    }
+    if($this->responseCode == Makiavelo::RESPONSE_CODE_NOT_FOUND) {
+      header("HTTP/1.0 404 not found");
+    }
+    if($this->responseCode == Makiavelo::RESPONSE_CODE_FORBIDDEN) {
+      header('HTTP/1.1 401 Unauthorized');
+    }
+    if($this->responseCode == Makiavelo::RESPONSE_CODE_BAD_REQUEST) {
+      header('HTTP/1.1 400 Bad Request');
+    }
+  }
+
+  public function contentTypeHeader() {
+    if(!$this->contentType) {
+      header("Content-Type: text/html");
+    } else {
+      header("Content-Type: " . $this->contentType);
+    }
+  }
+}
+
 
 class MakiaveloController {
 	protected $request;
+  protected $response;
 	protected $flash;
 	private $action;
   public $statusCode;
@@ -60,6 +89,7 @@ class MakiaveloController {
 		}
 
 		$this->request = new HTTPRequest($_SERVER['REQUEST_URI'], array_merge($get, $post, $named), $_SERVER['REQUEST_METHOD']);
+    $this->response = new HTTPResponse();
 		$this->flash = new Flash();
 
 	}
@@ -103,9 +133,9 @@ class MakiaveloController {
 			$this->$variable = $value;
 		}
 
-    if($this->statusCode == Makiavelo::RESPONSE_CODE_NOT_FOUND) {
-      header("HTTP/1.0 404 not found");
-    }
+    $this->response->responseCodeHeader();
+    $this->response->contentTypeHeader();
+    
 		require_once($path_layout);
 	}
 }

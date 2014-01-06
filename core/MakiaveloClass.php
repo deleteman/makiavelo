@@ -36,6 +36,7 @@ class Makiavelo {
 	const RESPONSE_CODE_OK = "200";
 	const RESPONSE_CODE_NOT_FOUND = "404";
 	const RESPONSE_CODE_FORBIDDEN = "401";
+	const RESPONSE_CODE_BAD_REQUEST = "400";
 
 	private static $debug_level = Makiavelo::DEBUG_LEVEL_FULL;
 
