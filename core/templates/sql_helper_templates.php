@@ -10,8 +10,9 @@ function save_[UC_NAME]($entity) {
 
 			$sql = "[CREATE_SQL]";
 
-			$sql = str_replace(":created_at:", Date("Y-m-d"), $sql);
-			$sql = str_replace(":updated_at:", Date("Y-m-d"), $sql);
+			$now = Date("Y-m-d H:i:s");
+      $entity->created_at = $now;
+      $entity->updated_at = $now;
 
 			preg_match_all("/:([a-zA-Z_0-9]*):/", $sql, $matches);
 			foreach($matches[1] as $attr) {
@@ -35,8 +36,8 @@ function update_[UC_NAME]($en) {
 
 		$sql = str_replace(":id:", $en->id, "[UPDATE_SQL]"); #'UPDATE tipo_buque set name="' . $en->name .'" WHERE id=' . $en->id;
 
-		$sql = str_replace(":updated_at:", Date("Y-m-d"), $sql);
-
+    $now = Date("Y-m-d H:i:s");
+    $en->updated_at = $now;
 
 		preg_match_all("/:([a-zA-Z_0-9]*):/", $sql, $matches);
 		foreach($matches[1] as $attr) {
@@ -47,6 +48,7 @@ function update_[UC_NAME]($en) {
       Makiavelo::error("Mysql Error:: " . mysql_error() . "::" . $sql); 
       return false;
     }
+    
 		return true;
 	} else {
 		return false;
