@@ -33,6 +33,23 @@ class HTTPRequest {
 class HTTPResponse {
   public $contentType;
   public $responseCode;
+  private $headers;
+
+  public function setHeader($name, $value) {
+    $this->headers[$name] = $value;
+  }
+
+
+  public function writeHeaders() {
+
+    $this->responseCodeHeader();
+    $this->contentTypeHeader();
+    if($this->headers) {
+      forEach($this->headers  as $name => $val) {
+        header($name . ": " . $val);
+      }
+    }
+  }
 
   public function responseCodeHeader() {
     if(!$this->responseCode) {
@@ -116,27 +133,29 @@ class MakiaveloController {
 		require_once($this->getViewPath($partial));
 	}
 	public function render($params = array(), $action = null) {
-		if($action != null) {
-			$this->action = $action;
-		}
-		$layout_name = ($this->layout != null) ? $this->layout : "";
-		if($this->layout !== null) {
-			$path_layout = ROOT_PATH . "/app/views/layout/" . $this->layout . ".html.php";
-		} else {
-			$path_layout = $this->getViewPath();
-		}
+    if($params !== null) {
+      if($action != null) {
+        $this->action = $action;
+      }
+      $layout_name = ($this->layout != null) ? $this->layout : "";
+      if($this->layout !== null) {
+        $path_layout = ROOT_PATH . "/app/views/layout/" . $this->layout . ".html.php";
+      } else {
+        $path_layout = $this->getViewPath();
+      }
 
-		if($params == null) {
-			$params = array();
-		}
-		foreach($params as $variable => $value) {
-			$this->$variable = $value;
-		}
-
-    $this->response->responseCodeHeader();
-    $this->response->contentTypeHeader();
+      if($params == null) {
+        $params = array();
+      }
+      foreach($params as $variable => $value) {
+        $this->$variable = $value;
+      }
+    }
+    $this->response->writeHeaders();
     
-		require_once($path_layout);
+    if($params !== null) {
+		  require_once($path_layout);
+    }
 	}
 }
 
