@@ -130,6 +130,19 @@ function select_field($en, $attr, $label, $options) {
 	return $html;
 }
 
+function checkbox_group($name, $label, $options) {
+
+	$html = '';
+	$label_text = $label;
+
+  foreach($options as $k => $v) {
+    $html .= '<div class=" checkbox">';
+    $html .= '<label><input type="checkbox" name="'.$name.'" value="'.$k.'" />'.$v.'</label>';
+	  $html .= "</div>";
+  }
+
+	return $html;
+}
 
 function boolean_field($en, $attr, $label = null) {
 
@@ -326,16 +339,18 @@ function textarea_field($en, $attr, $label = null, $html_attrs = array()) {
 
 
 function date_field_tag($name, $id, $label = null, $html_attrs = array()) {
-
 	$html_opts = "";
 	if(count($html_attrs) > 0) {
 		foreach($html_attrs as $htmlattr => $val) {
+      if(strtolower($htmlattr) == "class") {
+        $val .= " date-field";
+      }
 			$html_opts .= $htmlattr . '="' . $val . '" ';
 		}
 	}
 	$html = "";
-	if(isset($html_opts['no-container']) && !$html_opts['no-container']) {
-		$html = '<div class="form-field '.$error.'">';
+	if(isset($html_attrs['no-container']) && $html_attrs['no-container']) {
+		$html = '<div class="form-field">';
 	}
 	if($label != null) {
 		$label_text = $label;
@@ -345,12 +360,11 @@ function date_field_tag($name, $id, $label = null, $html_attrs = array()) {
 	
 	$html .= '<label for="'.$name.'">'.$label_text.'</label>';
 	$html .= '<input type="text"
-				class="date-field"
 				name="' . $name .'"
 				id="' . $id .'" 
 				'. $html_opts .'
 				/>';
-	if(isset($html_opts['no-container']) && !$html_opts['no-container']) {
+	if(isset($html_attrs['no-container']) && $html_attrs['no-container']) {
 		$html .= "</div>";
 	}
 
@@ -428,7 +442,7 @@ function submit($text, $options = array()) {
 		}
 	}
 
-	$html = '<input type="submit" value="'.$text.'" '.$html_attrs.' />';
+	$html = '<button type="submit" '.$html_attrs.' >'.$text.'</button>';
 	return $html;
 }
 
