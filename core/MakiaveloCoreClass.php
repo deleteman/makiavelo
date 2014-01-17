@@ -53,14 +53,11 @@ class MakiaveloCore {
 				$parts = explode("=", $value_key);
 				$key = urldecode($parts[0]);
 				Makiavelo::info("query param: " . print_r($parts, true));
-        Makiavelo::info("key: " . $key);
 				if(strpos($key, "[") !== false) {
-          Makiavelo::info("array param detected");
 					$new_key = substr($key,0, strpos($key, "["));
 					$second_key = substr($key,strpos($key, "[") + 1, strpos($key, "]") - 1);
 					$second_key = str_replace("[", "", $second_key);
 					$second_key = str_replace("]", "", $second_key);
-          Makiavelo::info("new key: ". $new_key . " - second_key: " . $second_key);
 					if(!isset($ret[$new_key]) || !is_array($ret[$new_key])) {
 						$ret[$new_key] = array();
 					}
