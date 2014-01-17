@@ -130,14 +130,15 @@ function select_field($en, $attr, $label, $options) {
 	return $html;
 }
 
-function checkbox_group($name, $label, $options) {
+function checkbox_group($name, $label, $options, $checked_values = array()) {
 
 	$html = '';
 	$label_text = $label;
 
   foreach($options as $k => $v) {
+    $checked = (in_array($k, $checked_values)) ? "checked" : "";
     $html .= '<div class=" checkbox">';
-    $html .= '<label><input type="checkbox" name="'.$name.'" value="'.$k.'" />'.$v.'</label>';
+    $html .= '<label><input type="checkbox" '.$checked.' name="'.$name.'" value="'.$k.'" />'.$v.'</label>';
 	  $html .= "</div>";
   }
 
