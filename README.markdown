@@ -7,6 +7,14 @@ helping improve development time.
 
 The current repository contains code within the `app` folder, which is where the web application's code would reside. That is the code for a very basic example of how to use some of the tools provided by the framework to create a (yet again) super basic bloging app.
 
+###Articles
+
+Here is a list of blog posts I've written about using Makiavelo:
+
++ [PHP::Writing a simple blog in Makiavelo Part I](http://www.commented-out.com/2012/12/27/phpwriting-a-simple-blog-in-makiavelo-part-i/)
++ [PHP::Makiavelo writing a simple blog Part II](http://www.commented-out.com/2013/01/10/phpmakiavelo-writing-a-simple-blog-part-ii/)
++ [Makiavelo:: Now with Migrations!](http://www.commented-out.com/2013/02/21/makiavelo-now-with-migrations/)
+
 ##Basic layout 
 
 I've developed this idea over time, after working for a while with Ruby on Rails, so there will be a lot of similarities. I tried to port as many features as I could.
