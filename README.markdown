@@ -46,14 +46,14 @@ This folder contains all the entities for your application. They'll be auto-requ
 This convention is pretty simple, just name your file as follows: [YourEntityName]Class.php
 
 The name of the entity should always be camel-case and the first character be uppercased. 
-Finally, your entity should not have the "Class" part on it's name. So for a user entity, you'll have the following:
+Finally, your entity should not have the "Class" part on its name. So for a user entity, you'll have the following:
 
 + A file called `UserClass.php` inside the entities folder.
 + A class called `User` inside the `UserClass.php` file. `User` will extend `MakiaveloEntity`.
 
 ###App/Helpers
 
-This is a purely organizational folder. In here you can store the helper functions that you create. They'll be accessible from everywhere on your app and the'll be auto-included.
+This is a purely organizational folder. In here you can store the helper functions that you create. They'll be accessible from everywhere on your app and they'll be auto-included.
 
 
 ###App/Views
@@ -102,7 +102,7 @@ The framework will then take the following actions:
 _That's right!_ Makiavelo just did all that for you!
 
 The next logical step would be to load the SQL file into the database, and ideally, Makiavelo would provide a way to do that for you, but right now, that's not implemented, so you'll have to do something like this: `mysql -u[username] -p -h[yourhost] [yourdatabase] < app/sql/creates/user.sql
-This will go away soon, promiss!!
+This will go away soon, promise!!
 
 After loading the SQL into your database, you're ready to start creating new users, cool uh!? Just go to the url created for you, and you'll see what I mean (i.e: yourhost.com/user/new will take you to the new user form).
 
@@ -134,7 +134,7 @@ The public folder contains all the assets for your application. It'll come with 
 * img: It'll contain all images for your application.
 * stylesheets: It'll contain all css files for your application.
 
-Whatever your store inside public, you'll be able to access it directly like so: `yourdomain.com/public/yourfolder/yourfile.js`
+Whatever you store inside public, you'll be able to access it directly like so: `yourdomain.com/public/yourfolder/yourfile.js`
 
 ###Lib
 
@@ -149,11 +149,11 @@ There are two sides to Makiavelo:
 ###Command line
 
 There are several useful commands to execute from the command line.
-As of right now, the frameworks provides a file named: `makiavelo.php` which should have execution privileges. Executing that file alone, will list the different commands available:
+As of right now, the framework provides a file named: `makiavelo.php` which should have execution privileges. Executing that file alone, will list the different commands available:
 
 + Generator command (g): This command tells the framework to generate one of many things:
     + CRUD (crud): This attribute for the generator command will tell it to generate the basic structure for a CRUD system for a specific entity.
-    + controller: This attribute will tell the generator to create a controller and it's views.
+    + controller: This attribute will tell the generator to create a controller and its views.
 + Database creator (db:create): It'll connect to our database using the configuration file and it'll create the database for our application
 + Database loader (db:load): It'll create all required tables for all our entities. As of right now, it doesn't allow us to pick which entity, so it'll load all of them.
 + Tasks: Makiavelo has support for tasks (similar to the ones used on RoR with Rake).
@@ -177,13 +177,13 @@ In order to be able to load the application you developed with Makiavelo, you'll
 
 + Allow mod_rewrite on your apache config.
 + Allow the use of .htaccess files
-+ Create a virtual host for your app, pointing to it's "public" folder
++ Create a virtual host for your app, pointing to its "public" folder
 + Configure the database access on the `config/database.yml` file. Right now, only MySQL is supported.
 + Configure your `/etc/hosts` file to point the new virtual host to your localhost
 + ????
 + Profit!
 
-_NOTE_: I need to add more details to each point, but it should be pretty straight forward.
+_NOTE_: I need to add more details to each point, but it should be pretty straightforward.
 
 #More details
 
@@ -254,7 +254,7 @@ Returns the HTML for the opening tag of the form element.
 
 **Parameters**
 1. $en: The entity we're working with.
-2. $http_action: (Optional, "create" by default). References the action that we'll be doing. It's a string that must match the name of the action you setup on the routing array.
+2. $http_action: (Optional, "create" by default). References the action that we'll be doing. It's a string that must match the name of the action you set up on the routing array.
 3. $html_attrs: (Optional) Contains all extra html options for the form.
 
 ####_text_field_
@@ -319,7 +319,7 @@ Returns the HTML code for a checkbox. If the value of the attribute used is "1" 
 
 ###Small example
 
-Lets show how we would do a simple for for creating a <code>User</code> type entity:
+Let's show how we would do a simple for for creating a <code>User</code> type entity:
 
 ```php
 <?=form_for($this->entity)?>
@@ -399,13 +399,13 @@ Let's look at an example of defining roles:
 
 ```
 Using the special array `$__SECURITY` we're able to set the different access roles, and the entity which will be used with them.
-According to our definition, the "anonymous" user role is assigned to the new visitor before they login. They, after they login, a role will be assigned. And as expected, the hierarchy is: admin > user > anonymous
+According to our definition, the "anonymous" user role is assigned to the new visitor before they login. Then, after they login, a role will be assigned. And as expected, the hierarchy is: admin > user > anonymous
 
 ##Allowing or denying access to a specific role
 
 How do we use the above information to allow or deny certain roles from accessing part of our site/web app?
 Easy! just add the minimum allowed role on the routes file, for each route you want to protect. 
-Lets look at an example:
+Let's look at an example:
 
 ```php
 $_ROUTES[] = array(
@@ -431,7 +431,7 @@ Makiavelo tries to handle internationalization just as Rails does. Inside the pr
 
 ###Locale files
 
-Inside the `config/locales/` folder the use must create the different locale files, organized by folders named after the desired language. 
+Inside the `config/locales/` folder the user must create the different locale files, organized by folders named after the desired language. 
 i.e The folder _config/locales/en_ will contain all English localization strings, and a _config/locales/es_ will have all the Spanish equivalents.
 The format for the localization files is the same as the one used by I18n on rails, a YAML file with the following structure:
 
@@ -488,7 +488,7 @@ That example uses the "getError" and "setError" methods, but they could've easil
 
 Makiavelo attempts to "borrow" the concept of tasks from Ruby on Rails, by allowing the developer to define custom methods that can be executed from the command line.
 
-Lets look at an example of how you'd execute a task, and then, we'll talk about how to define one:
+Let's look at an example of how you'd execute a task, and then, we'll talk about how to define one:
 
 `./makiavelo.php task users:createFirsUser`
 
