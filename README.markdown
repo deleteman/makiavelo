@@ -5,7 +5,7 @@ helping improve development time.
 
 ##Sample included
 
-The current repository contains code within the `app` folder, which is where the web application's code would reside. That is the code for a very basic example of how to use some of the tools provided by the framework to create a (yet again) super basic bloging app.
+The current repository contains code within the `app` folder, which is where the web application's code would reside. That is the code for a very basic example of how to use some of the tools provided by the framework to create a (yet again) super basic blogging app.
 
 ###Articles
 
@@ -46,14 +46,14 @@ This folder contains all the entities for your application. They'll be auto-requ
 This convention is pretty simple, just name your file as follows: [YourEntityName]Class.php
 
 The name of the entity should always be camel-case and the first character be uppercased. 
-Finally, your entity should not have the "Class" part on it's name. So for a user entity, you'll have the following:
+Finally, your entity should not have the "Class" part on its name. So for a user entity, you'll have the following:
 
 + A file called `UserClass.php` inside the entities folder.
 + A class called `User` inside the `UserClass.php` file. `User` will extend `MakiaveloEntity`.
 
 ###App/Helpers
 
-This is a purely organizational folder. In here you can store the helper functions that you create. They'll be accessible from everywhere on your app and the'll be auto-included.
+This is a purely organizational folder. In here you can store the helper functions that you create. They'll be accessible from everywhere on your app and they'll be auto-included.
 
 
 ###App/Views
@@ -102,7 +102,7 @@ The framework will then take the following actions:
 _That's right!_ Makiavelo just did all that for you!
 
 The next logical step would be to load the SQL file into the database, and ideally, Makiavelo would provide a way to do that for you, but right now, that's not implemented, so you'll have to do something like this: `mysql -u[username] -p -h[yourhost] [yourdatabase] < app/sql/creates/user.sql
-This will go away soon, promiss!!
+This will go away soon, promise!!
 
 After loading the SQL into your database, you're ready to start creating new users, cool uh!? Just go to the url created for you, and you'll see what I mean (i.e: yourhost.com/user/new will take you to the new user form).
 
@@ -115,10 +115,10 @@ All helper functions are named using the following convention:
 
 For example, if we created an entity called User using the generator, we'd end up with the following sql helper functions:
 
-+ __save_user__: Saves the entity on the database, receives the entity as a paremeter.
-+ __update_user__: Updates the entity on the database, receives the entity as a paremeter.
-+ __delete_user: Deletes the entity from the database. It receives the ID as a paremter.
-+ __load_user__: Loads the user from the database and returns the user entity. Recieves an ID as paremeter.
++ __save_user__: Saves the entity on the database, receives the entity as a parameter.
++ __update_user__: Updates the entity on the database, receives the entity as a parameter.
++ __delete_user: Deletes the entity from the database. It receives the ID as a parameter.
++ __load_user__: Loads the user from the database and returns the user entity. Receives an ID as parameter.
 + __load_user_where__: Loads the user from the database and returns the user entity. Receives a WHERE condition to look for the entity.
 + __list_user__: Returns a list of user entities. Receives 2 optional parameters: order and limit
 
@@ -134,7 +134,7 @@ The public folder contains all the assets for your application. It'll come with 
 * img: It'll contain all images for your application.
 * stylesheets: It'll contain all css files for your application.
 
-Whatever your store inside public, you'll be able to access it directly like so: `yourdomain.com/public/yourfolder/yourfile.js`
+Whatever you store inside public, you'll be able to access it directly like so: `yourdomain.com/public/yourfolder/yourfile.js`
 
 ###Lib
 
@@ -143,17 +143,17 @@ The lib folder is meant to contain all extra code added by the developer and als
 ##Using the framework
 There are two sides to Makiavelo:
 
-+ The command line, which has some usefull commands to do things like creating the tables for the different entities, or creating the basic required files for a standard CRUD system.
++ The command line, which has some useful commands to do things like creating the tables for the different entities, or creating the basic required files for a standard CRUD system.
 + The web interface, which would the site/app being developed.
 
 ###Command line
 
-There are several usefull commands to execute from the command line.
-As of right now, the frameworks provides a file named: `makiavelo.php` which should have execution privileges. Executing that file alone, will list the different commands available:
+There are several useful commands to execute from the command line.
+As of right now, the framework provides a file named: `makiavelo.php` which should have execution privileges. Executing that file alone, will list the different commands available:
 
 + Generator command (g): This command tells the framework to generate one of many things:
     + CRUD (crud): This attribute for the generator command will tell it to generate the basic structure for a CRUD system for a specific entity.
-    + controller: This attribute will tell the generator to create a controller and it's views.
+    + controller: This attribute will tell the generator to create a controller and its views.
 + Database creator (db:create): It'll connect to our database using the configuration file and it'll create the database for our application
 + Database loader (db:load): It'll create all required tables for all our entities. As of right now, it doesn't allow us to pick which entity, so it'll load all of them.
 + Tasks: Makiavelo has support for tasks (similar to the ones used on RoR with Rake).
@@ -177,13 +177,13 @@ In order to be able to load the application you developed with Makiavelo, you'll
 
 + Allow mod_rewrite on your apache config.
 + Allow the use of .htaccess files
-+ Create a virtual host for your app, pointing to it's "public" folder
++ Create a virtual host for your app, pointing to its "public" folder
 + Configure the database access on the `config/database.yml` file. Right now, only MySQL is supported.
 + Configure your `/etc/hosts` file to point the new virtual host to your localhost
 + ????
 + Profit!
 
-_NOTE_: I need to add more details to each point, but it should be pretty straight forward.
+_NOTE_: I need to add more details to each point, but it should be pretty straightforward.
 
 #More details
 
@@ -214,13 +214,13 @@ Here is an explanation of each of the keys of those arrays:
 + controller: The name of the controller, without the "Controller" part (all controllers have that word on the class name).
 + action: The name of the method to execute from the controller. It'll map to a method called: `ACTION_NAMEAction` (i,e: indexAction).
 + via: This is an optional parameter, and will force the route to work using the specified HTTP verb (only values supported right now are `get` and `post`). The default value here is `get`.
-+ role: Another optional parameter, usefull when your application needs to filter out actions based on the role of the user. 
++ role: Another optional parameter, useful when your application needs to filter out actions based on the role of the user. 
 
-Each entry in the array, will auto-generate a url helper function, so you can use that instead of hard-coding the urls all throught the site.
+Each entry in the array, will auto-generate a url helper function, so you can use that instead of hard-coding the urls all throughout the site.
 
 ###URL helpers
 
-The helpers are created dinamically, and they basically return the url, replacing any attribute with the correct value.
+The helpers are created dynamically, and they basically return the url, replacing any attribute with the correct value.
 Here is how the helper functions are named:
 
 ```
@@ -252,9 +252,9 @@ There are two types of functions, the ones that require an entity and the generi
 ####_form_for_
 Returns the HTML for the opening tag of the form element.
 
-**Paramters**
+**Parameters**
 1. $en: The entity we're working with.
-2. $http_action: (Optional, "create" by default). Rerefences the action that we'll be doing. It's a string that must match the name of the action you setup on the routing array.
+2. $http_action: (Optional, "create" by default). References the action that we'll be doing. It's a string that must match the name of the action you set up on the routing array.
 3. $html_attrs: (Optional) Contains all extra html options for the form.
 
 ####_text_field_
@@ -263,12 +263,12 @@ Returns the HTML code for a text field.
 **Parameters**
 
 1. $en: The entity we're working with.
-2. $attr: The name of the etity's attribute.
+2. $attr: The name of the entity's attribute.
 3. $label: (Optional) If non-null, it'll add a label field surrounding the text field with the content we pass on this parameter.
-4. $html_attr: (Optiona) Array containing other html attributes for the input field. In a key => value format (i.e: <code>array("id" => "my_id")</code>)
+4. $html_attr: (Optional) Array containing other html attributes for the input field. In a key => value format (i.e: <code>array("id" => "my_id")</code>)
 
 ####_password_field_
-Returns the HTML code for an input field of type password. For more infor refer to the <code>text_field</code> helper.
+Returns the HTML code for an input field of type password. For more info refer to the <code>text_field</code> helper.
 
 ####_hidden_field_
 Returns the HTML code for an input field of type hidden.
@@ -282,12 +282,12 @@ Returns the HTML code for an input field of type hidden.
 
 Returns the HTML code for a select field and it's options.
 
-**Paramaters**
+**Parameters**
 
 1. $en: The entity we're working with.
-2. $attr: The attribute that we're referencing. If the value of this attriute equals the value of one of the options, that option will be auto-selected.
+2. $attr: The attribute that we're referencing. If the value of this attribute equals the value of one of the options, that option will be auto-selected.
 3. $label: (Optional) If non-null, it'll add a label field surrounding the text field with the content we pass on this parameter.
-4. $options: (Optiona) Array containing other html attributes for the input field. In a key => value format (i.e: <code>array("id" => "my_id")</code>)
+4. $options: (Optional) Array containing other html attributes for the input field. In a key => value format (i.e: <code>array("id" => "my_id")</code>)
 
 
 ####_time_field_ 
@@ -314,12 +314,12 @@ Returns the HTML code for a checkbox. If the value of the attribute used is "1" 
 **Parameters**
 
 1. $en: The entity we're working with.
-2. $attr: The attribute that we're referencing. If the value of this attriute equals the value of one of the options, that option will be auto-selected.
+2. $attr: The attribute that we're referencing. If the value of this attribute equals the value of one of the options, that option will be auto-selected.
 3. $label: (Optional) If non-null, it'll add a label field surrounding the text field with the content we pass on this parameter.
 
 ###Small example
 
-Lets show how we would do a simple for for creating a <code>User</code> type entity:
+Let's show how we would do a simple for for creating a <code>User</code> type entity:
 
 ```php
 <?=form_for($this->entity)?>
@@ -331,9 +331,9 @@ Lets show how we would do a simple for for creating a <code>User</code> type ent
  <?=end_form_tag()?>
 ```
 
-In that example, we also used the <code>submit</code> helper, which is that simple, and the <code>end_form_tag</code> helper, which should be used at the ned of the for, to print the closing tag.
+In that example, we also used the <code>submit</code> helper, which is that simple, and the <code>end_form_tag</code> helper, which should be used at the end of the for, to print the closing tag.
 
-That form from the example could be used as a "New" form aswell as an "Edit" form.
+That form from the example could be used as a "New" form as well as an "Edit" form.
 
 ###Generic helper functions
 
@@ -369,7 +369,7 @@ Currently the following validations are supported:
 
 The plan is to allow for custom validations to be created by the developer.
 
-_A simple example_: The following code will setup the Post entity to validate for it's content, title and owner's email fields:
+_A simple example_: The following code will setup the Post entity to validate for its content, title and owner's email fields:
 
 ```php
 class PostClass extends MakiaveloEntity {
@@ -388,7 +388,7 @@ class PostClass extends MakiaveloEntity {
 ##Security
 
 Currently Makiavelo supports the definition of "roles" for a given entity (normally a user) and it'll create a hierarchy, based on the order in which the roles are defined.
-Lets look at an example of defining roles:
+Let's look at an example of defining roles:
 
 
 ```php
@@ -399,13 +399,13 @@ Lets look at an example of defining roles:
 
 ```
 Using the special array `$__SECURITY` we're able to set the different access roles, and the entity which will be used with them.
-According to our definition, the "anonymous" user role is assigned to the new visitor before they login. They, after they login, a role will be assigned. And as expected, the hierarchy is: admin > user > anonymous
+According to our definition, the "anonymous" user role is assigned to the new visitor before they login. Then, after they login, a role will be assigned. And as expected, the hierarchy is: admin > user > anonymous
 
 ##Allowing or denying access to a specific role
 
-How do we use the above information to allow or deny certain roles from accesing part of our site/web app?
+How do we use the above information to allow or deny certain roles from accessing part of our site/web app?
 Easy! just add the minimum allowed role on the routes file, for each route you want to protect. 
-Lets look at an example:
+Let's look at an example:
 
 ```php
 $_ROUTES[] = array(
@@ -418,7 +418,7 @@ $_ROUTES[] = array(
 	); 
 ```
 
-With the above configuration, we're allowing only logged in users to interact with the post urls. And only admins can create d, update and delte posts.
+With the above configuration, we're allowing only logged in users to interact with the post urls. And only admins can create d, update and delete posts.
 
 ##Database connection
 
@@ -431,8 +431,8 @@ Makiavelo tries to handle internationalization just as Rails does. Inside the pr
 
 ###Locale files
 
-Inside the `config/locales/` folder the use must create the different locale files, organized by folders named after the desired language. 
-i.e The folder _config/locales/en_ will contain all english localization strings, and a _config/locales/es_ will have all the spanish equivalents.
+Inside the `config/locales/` folder the user must create the different locale files, organized by folders named after the desired language. 
+i.e The folder _config/locales/en_ will contain all English localization strings, and a _config/locales/es_ will have all the Spanish equivalents.
 The format for the localization files is the same as the one used by I18n on rails, a YAML file with the following structure:
 
 ```yml
@@ -488,7 +488,7 @@ That example uses the "getError" and "setError" methods, but they could've easil
 
 Makiavelo attempts to "borrow" the concept of tasks from Ruby on Rails, by allowing the developer to define custom methods that can be executed from the command line.
 
-Lets look at an example of how you'd execute a task, and then, we'll talk about how to define one:
+Let's look at an example of how you'd execute a task, and then, we'll talk about how to define one:
 
 `./makiavelo.php task users:createFirsUser`
 
