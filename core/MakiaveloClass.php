@@ -62,7 +62,7 @@ class Makiavelo
 
     public static function puts($txt)
     {
-        echo "\n".$txt;
+        echo "\n".$txt."\n";
     }
 
     public static function debug($txt, $lvl)
