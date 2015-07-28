@@ -51,9 +51,7 @@ include_once(ROOT_PATH . "/config/config.php");
 $parameters = $argv;
 
 if(count($parameters) > 1) {
-	$mk = new Makiavelo();
-
-	$action = $mk->getAction($parameters[1]);
+	$action = Makiavelo::getAction($parameters[1]);
 	unset($parameters[0]);
 	unset($parameters[1]);
 
